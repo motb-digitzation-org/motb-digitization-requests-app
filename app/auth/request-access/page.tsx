@@ -12,51 +12,84 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function RequestAccess() {
   const router = useRouter();
+  const [alert, setAlert] = useState<boolean>(false);
 
   return (
-    <div>
-      <button
-        className="mb-4"
-        onClick={() => {
-          router.push("/");
-        }}
-      >
-        Home
-      </button>
-
-      <Card>
+    <div className="grid h-screen grid-cols-4 items-center bg-gray-300 p-4 md:grid-cols-6 lg:grid-cols-12">
+      <Card className="col-span-4 md:col-start-2 lg:col-span-6 lg:col-start-4">
         <CardHeader>
+          <button
+            className="mb-4"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            Home
+          </button>
           <CardTitle>Request Access</CardTitle>
           <CardDescription>Request access to the application.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form action="" method="post" className="flex flex-col gap-4">
+          <form action="" method="post" className="flex flex-col gap-8">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="first-name" className="mb-2">
+                  First Name{" "}
+                  <span className="text-xs text-red-400">(required)</span>
+                </Label>
+                <Input
+                  type="text"
+                  placeholder="First Name"
+                  name="firstName"
+                  id="firstName"
+                  required
+                  autoComplete="true"
+                />
+              </div>
+              <div>
+                <Label htmlFor="last-name" className="mb-2">
+                  Last Name{" "}
+                  <span className="text-xs text-red-400">(required)</span>
+                </Label>
+                <Input
+                  type="text"
+                  placeholder="Last Name"
+                  name="lastName"
+                  id="lastName"
+                  required
+                  autoComplete="true"
+                />
+              </div>
+            </div>
+
             <div>
-              <Label htmlFor="first-name" className="">
-                First Name
+              <Label htmlFor="email" className="mb-2">
+                Email <span className="text-xs text-red-400">(required)</span>
               </Label>
-              <Input type="text" placeholder="First Name" id="first-Name" />
-            </div>
-            <div>
-              <Label htmlFor="last-name">Last Name</Label>
-              <Input type="text" placeholder="Last Name" id="last-name" />
-            </div>
-
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input type="email" placeholder="Email" id="email" />
+              <Input
+                type="email"
+                placeholder="Email"
+                name="email"
+                id="email"
+                required
+                autoComplete="true"
+              />
             </div>
 
             <div>
-              <Label htmlFor="">Select your role</Label>
-              <RadioGroup defaultValue="comfortable">
+              <Label htmlFor="" className="mb-2">
+                Select your role:{" "}
+                <span className="text-xs text-red-400">(required)</span>
+              </Label>
+              <RadioGroup defaultValue="requester">
                 <div className="flex items-center gap-3">
                   <RadioGroupItem value="requester" id="requester" />
                   <Label htmlFor="requester">
-                    Requester - Wishes to request objects
+                    Requester - Requests objects for digitization
                   </Label>
                 </div>
                 <div className="flex items-center gap-3">
@@ -70,16 +103,23 @@ export default function RequestAccess() {
 
             <Button
               type="button"
+              className="cursor-pointer"
               onClick={() => {
-                router.push("/role/requester/home");
+                setAlert(true);
               }}
             >
               Request Access
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="text-center flex flex-col justify-center items-center">
-          <small>Thank you for your submission. </small>
+        <CardFooter className="flex flex-col items-center justify-center text-center">
+          {alert ? (
+            <small>
+              Thank you for your submission. An admin will contact you soon.
+            </small>
+          ) : (
+            <small></small>
+          )}
         </CardFooter>
       </Card>
     </div>
