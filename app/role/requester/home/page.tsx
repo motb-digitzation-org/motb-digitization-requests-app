@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Navigation from "@/components/mwidgets/navigation";
+import Request from "@/components/mwidgets/request";
 
 export default function RequestHome() {
   return (
@@ -25,8 +26,9 @@ export default function RequestHome() {
             Below is a list of all your digitization requests.
           </CardDescription>
         </CardHeader>
-        <CardContent></CardContent>
-        <CardFooter></CardFooter>
+        <CardContent className="">
+          <Request />
+        </CardContent>
       </Card>
 
       <Card className="hidden md:col-span-4 md:block lg:col-span-7">
