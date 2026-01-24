@@ -1,4 +1,4 @@
-"use client";
+import ThreeColLayout from "@/components/mlayouts/threeColLayout";
 import {
   Card,
   CardContent,
@@ -7,27 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Navigation from "@/components/mwidgets/navigation";
-import Request from "@/components/mwidgets/request";
 
 export default function RequestHome() {
   return (
-    <div className="grid h-screen grid-cols-3 gap-2 bg-gray-300 p-4 md:grid-cols-6 lg:grid-cols-12">
-      <div className="fixed bottom-0 left-0 w-screen lg:static lg:col-span-2 lg:flex lg:w-auto lg:flex-row lg:p-0">
-        <Card className="rounded-none border-0 bg-gray-900/45 p-2 lg:w-screen lg:rounded-xl lg:bg-white lg:py-6">
-          <Navigation />
-        </Card>
-      </div>
-
+    <ThreeColLayout>
       <Card className="col-span-4 md:col-span-2 lg:col-span-3">
         <CardHeader>
-          <CardTitle>Digitization Requests</CardTitle>
+          <CardTitle>All Requests</CardTitle>
           <CardDescription>
-            Below is a list of all your digitization requests.
+            Below is a list of all your requests.
           </CardDescription>
         </CardHeader>
         <CardContent className="">
-          <Request />
+        {/* TODO: insert a list of request previews */}
         </CardContent>
       </Card>
 
@@ -36,9 +28,11 @@ export default function RequestHome() {
           <CardTitle></CardTitle>
           <CardDescription></CardDescription>
         </CardHeader>
-        <CardContent></CardContent>
+        <CardContent>
+          {/* TODO: insert details of selected request */}
+        </CardContent>
         <CardFooter></CardFooter>
       </Card>
-    </div>
+    </ThreeColLayout>
   );
 }

@@ -53,7 +53,7 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form action="" method="post" className="flex flex-col gap-8">
-            <div>
+            <div className="input-wrapper">
               <Label htmlFor="email" className="mb-2">
                 Email <span className="text-xs text-red-400">(required)</span>
               </Label>

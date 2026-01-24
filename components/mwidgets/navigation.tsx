@@ -17,7 +17,7 @@ export default function Navigation() {
       {
         label: "Help",
         icon: <CircleQuestionMark />,
-        link: "/role/requester/home",
+        link: "/role/requester/help",
       },
       { label: "Settings", icon: <Settings />, link: "/role/requester/home" },
     ];

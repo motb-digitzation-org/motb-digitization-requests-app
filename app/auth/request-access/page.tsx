@@ -36,7 +36,7 @@ export default function RequestAccess() {
         <CardContent>
           <form action="" method="post" className="flex flex-col gap-8">
             <div className="grid grid-cols-2 gap-4">
-              <div>
+              <div className="input-wrapper">
                 <Label htmlFor="first-name" className="mb-2">
                   First Name{" "}
                   <span className="text-xs text-red-400">(required)</span>
@@ -50,7 +50,7 @@ export default function RequestAccess() {
                   autoComplete="true"
                 />
               </div>
-              <div>
+              <div className="input-wrapper">
                 <Label htmlFor="last-name" className="mb-2">
                   Last Name{" "}
                   <span className="text-xs text-red-400">(required)</span>
@@ -66,7 +66,7 @@ export default function RequestAccess() {
               </div>
             </div>
 
-            <div>
+            <div className="input-wrapper">
               <Label htmlFor="email" className="mb-2">
                 Email <span className="text-xs text-red-400">(required)</span>
               </Label>
@@ -80,7 +80,7 @@ export default function RequestAccess() {
               />
             </div>
 
-            <div>
+            <div className="input-wrapper">
               <Label htmlFor="" className="mb-2">
                 Select your role:{" "}
                 <span className="text-xs text-red-400">(required)</span>
