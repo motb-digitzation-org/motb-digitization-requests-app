@@ -29,7 +29,7 @@ export default function Help() {
             <form
               action=""
               method="post"
-              className="flex w-full flex-col gap-8 lg:w-1/2"
+              className="flex w-full flex-col gap-8 lg:w-2/3"
             >
               <div className="grid grid-cols-2 gap-4">
                 <div className="input-wrapper">
@@ -82,7 +82,7 @@ export default function Help() {
           </div>
         </CardContent>
 				<CardFooter className="justify-center">
-					<small>Thank you for submitting the form. An administrator will reach out to you soon.</small>
+					<small className="text-center">Your submission was successful. An administrator will reach out to you soon to answer your query.</small>
 				</CardFooter>
       </Card>
     </ThreeColLayout>

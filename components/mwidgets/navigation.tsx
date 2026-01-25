@@ -13,7 +13,7 @@ export default function Navigation() {
   const navigationList: { label: string; icon: ReactElement; link: string }[] =
     [
       { label: "Home", icon: <House />, link: "/role/requester/home" },
-      { label: "New Request", icon: <Plus />, link: "/role/requester/home" },
+      { label: "New Request", icon: <Plus />, link: "/role/requester/new-request" },
       {
         label: "Help",
         icon: <CircleQuestionMark />,
@@ -43,7 +43,7 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav className="main-navigation grid grid-cols-4 gap-2 p-2 lg:grid-cols-1">
+    <nav id="navigation" className="grid grid-cols-4 gap-2 p-2 lg:grid-cols-1">
       {navigationList.map((item, index) => (
         <Tooltip key={index}>
           <TooltipTrigger asChild>
