@@ -80,7 +80,7 @@ export default function NewRequest() {
 
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 mb-20 md:col-span-6 lg:col-span-10 lg:mb-0">
+      <Card className="col-span-4 mb-16 h-full md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>New Request</CardTitle>
           <CardDescription>
@@ -92,7 +92,7 @@ export default function NewRequest() {
             <form
               action=""
               method="post"
-              className="flex w-full flex-col gap-8 lg:w-2/3"
+              className="flex w-full flex-col gap-8 md:w-2/3"
             >
               <div className="grid grid-cols-2 gap-4">
                 <div className="input-wrapper">

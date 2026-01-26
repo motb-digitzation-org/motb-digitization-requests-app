@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function Help() {
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 md:col-span-6 lg:col-span-10">
+      <Card className="col-span-4 h-[95vh] lg:mb-0 mb-16 md:col-span-6 lg:col-span-10">
         <CardHeader className="text-center">
           <CardTitle>Help</CardTitle>
           <CardDescription>
@@ -31,7 +31,7 @@ export default function Help() {
               method="post"
               className="flex w-full flex-col gap-8 lg:w-2/3"
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-4">
                 <div className="input-wrapper">
                   <Label htmlFor="firstName" className="mb-2">
                     First Name{" "}
@@ -81,9 +81,12 @@ export default function Help() {
             </form>
           </div>
         </CardContent>
-				<CardFooter className="justify-center">
-					<small className="text-center">Your submission was successful. An administrator will reach out to you soon to answer your query.</small>
-				</CardFooter>
+        <CardFooter className="justify-center">
+          <small className="text-center">
+            Your submission was successful. An administrator will reach out to
+            you soon to answer your query.
+          </small>
+        </CardFooter>
       </Card>
     </ThreeColLayout>
   );
