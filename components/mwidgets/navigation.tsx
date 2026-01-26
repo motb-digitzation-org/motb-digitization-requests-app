@@ -19,7 +19,7 @@ export default function Navigation() {
         icon: <CircleQuestionMark />,
         link: "/role/requester/help",
       },
-      { label: "Settings", icon: <Settings />, link: "/role/requester/home" },
+      { label: "Settings", icon: <Settings />, link: "/role/requester/settings" },
     ];
 
   const router = useRouter();
