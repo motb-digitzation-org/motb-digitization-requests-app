@@ -25,13 +25,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
@@ -80,11 +73,11 @@ export default function NewRequest() {
 
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 mb-16 h-full md:col-span-6 lg:col-span-10 lg:mb-0">
+      <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>New Request</CardTitle>
           <CardDescription>
-            Fill out the help form below to submit a new digitisation request.
+            Fill out the form below to submit a new digitisation request.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -92,9 +85,9 @@ export default function NewRequest() {
             <form
               action=""
               method="post"
-              className="flex w-full flex-col gap-8 md:w-2/3"
+              className="flex flex-col gap-8 lg:w-2/3"
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-8">
                 <div className="input-wrapper">
                   <Label htmlFor="firstName" className="mb-2">
                     First Name{" "}
@@ -162,71 +155,55 @@ export default function NewRequest() {
                 </Combobox>
               </div>
 
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-4">
-                <div className="input-wrapper">
-                  <Label htmlFor="objectCode" className="mb-2">
-                    Object Code{" "}
-                    <span className="text-xs text-red-400">(required)</span>
-                  </Label>
-                  <Input
-                    type="text"
-                    name="objectCode"
-                    id="objectCode"
-                    placeholder="Ex: MOTB.BIB.004494"
-                    required
-                  />
-                </div>
-
-                <div className="input-wrapper">
-                  <Label htmlFor="objectName" className="mb-2">
-                    Object Name{" "}
-                    <span className="text-xs text-red-400">(required)</span>
-                  </Label>
-                  <Input
-                    type="text"
-                    name="objectName"
-                    id="objectName"
-                    placeholder="Ex: Aitken Bible"
-                    required
-                  />
-                </div>
+              <div className="input-wrapper">
+                <Label htmlFor="objectName" className="mb-2">
+                  Object Name{" "}
+                  <span className="text-xs text-red-400">(required)</span>
+                </Label>
+                <Input
+                  type="text"
+                  name="objectName"
+                  id="objectName"
+                  placeholder="Ex: Aitken Bible"
+                  required
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="input-wrapper">
-                  <Label htmlFor="tier" className="mb-2">
-                    Tier{" "}
-                    <span className="text-xs text-red-400">(required)</span>
-                  </Label>
-                  <Select name="tier" required>
-                    <SelectTrigger className="w-full" name="tier" id="tier">
-                      <SelectValue placeholder="Tier" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="tier-1">Tier 1</SelectItem>
-                      <SelectItem value="tier-2">Tier 2</SelectItem>
-                      <SelectItem value="tier-3">Tier 3</SelectItem>
-                      <SelectItem value="tier-4">Tier 4</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="input-wrapper">
+                <Label htmlFor="objectCode" className="mb-2">
+                  Object Code{" "}
+                  <span className="text-xs text-red-400">(required)</span>
+                </Label>
+                <Input
+                  type="text"
+                  name="objectCode"
+                  id="objectCode"
+                  placeholder="Ex: MOTB.BIB.004494"
+                  required
+                />
+              </div>
 
-                <div className="input-wrapper">
-                  <Label htmlFor="onDisplay" className="mb-2">
-                    On Display?{" "}
-                    <span className="text-xs text-red-400">(required)</span>
-                  </Label>
-                  <div className="inline-flex items-center gap-2">
-                    <Switch
-                      name="onDisplay"
-                      id="onDisplay"
-                      className="cursor-pointer"
-                      onCheckedChange={() => {
-                        setChecked(!checked);
-                      }}
-                    />
-                    {checked ? <p>Yes</p> : <p>No</p>}
-                  </div>
+              <div className="input-wrapper">
+                <Label htmlFor="tier" className="mb-2">
+                  Tier <span className="text-xs text-red-400">(required)</span>
+                </Label>
+              </div>
+
+              <div className="input-wrapper">
+                <Label htmlFor="onDisplay" className="mb-2">
+                  On Display?{" "}
+                  <span className="text-xs text-red-400">(required)</span>
+                </Label>
+                <div className="inline-flex items-center gap-2">
+                  <Switch
+                    name="onDisplay"
+                    id="onDisplay"
+                    className="cursor-pointer"
+                    onCheckedChange={() => {
+                      setChecked(!checked);
+                    }}
+                  />
+                  {checked ? <p>Yes</p> : <p>No</p>}
                 </div>
               </div>
 
@@ -276,65 +253,45 @@ export default function NewRequest() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-4">
-                <div className="input-wrapper">
-                  <Label htmlFor="requestDueDate" className="mb-2">
-                    Request Due Date
-                  </Label>
-                  <Popover>
-                    <PopoverTrigger
-                      asChild
-                      className="w-full"
-                      name="requestDueDate"
-                      id="requestDueDate"
+              <div className="input-wrapper">
+                <Label htmlFor="requestDueDate" className="mb-2">
+                  Request Due Date
+                </Label>
+                <Popover>
+                  <PopoverTrigger
+                    asChild
+                    className="w-full"
+                    name="requestDueDate"
+                    id="requestDueDate"
+                  >
+                    <Button
+                      variant="outline"
+                      id="date-picker-simple"
+                      className="justify-start font-normal"
                     >
-                      <Button
-                        variant="outline"
-                        id="date-picker-simple"
-                        className="justify-start font-normal"
-                      >
-                        {date ? (
-                          format(date, "PPP")
-                        ) : (
-                          <span className="text-gray-500">Pick a date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        defaultMonth={date}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
+                      {date ? (
+                        format(date, "PPP")
+                      ) : (
+                        <span className="text-gray-500">Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      defaultMonth={date}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
 
-                <div className="input-wrapper">
-                  <Label htmlFor="requestType" className="mb-2">
-                    Request Type{" "}
-                    <span className="text-xs text-red-400">(required)</span>
-                  </Label>
-                  <Select required name="requestType">
-                    <SelectTrigger
-                      className="w-full"
-                      name="requestType"
-                      id="requestType"
-                    >
-                      <SelectValue placeholder="Request Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="bc100">BC100</SelectItem>
-                      <SelectItem value="tsr">
-                        Torah Scroll Rig (TSR)
-                      </SelectItem>
-                      <SelectItem value="msi">
-                        Multi-Spectral Imaging (MSI)
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div>
+                <Label htmlFor="requestType" className="mb-2">
+                  Request Type{" "}
+                  <span className="text-xs text-red-400">(required)</span>
+                </Label>
               </div>
 
               <div className="input-wrapper">
@@ -343,10 +300,6 @@ export default function NewRequest() {
                 </Label>
                 <Textarea name="additionalNotes" id="additionalNotes" />
               </div>
-
-              <Button type="submit" className="w-full cursor-pointer">
-                Submit Request
-              </Button>
             </form>
           </div>
         </CardContent>

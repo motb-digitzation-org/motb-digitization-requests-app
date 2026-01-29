@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function Help() {
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 h-[95vh] lg:mb-0 mb-16 md:col-span-6 lg:col-span-10">
+      <Card className="col-span-4 md:col-span-6 lg:col-span-10">
         <CardHeader className="text-center">
           <CardTitle>Help</CardTitle>
           <CardDescription>

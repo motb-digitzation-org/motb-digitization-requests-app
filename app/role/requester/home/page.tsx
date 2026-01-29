@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -12,16 +11,16 @@ import {
 export default function RequestHome() {
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 h-[40vh] md:col-span-3 md:mb-16 md:h-[85vh] lg:col-span-4 lg:mb-0 lg:h-[95vh]">
+      <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-4 lg:mb-0">
         <CardHeader>
           <CardTitle>All Requests</CardTitle>
-          <CardDescription>
+          <CardDescription className="mb-2">
             Below is a list of all your requests.
           </CardDescription>
         </CardHeader>
-        <CardContent className="overflow-y-scroll">
+        <CardContent>
           {/* TODO: insert a list of request previews */}
-          <div className="grid grid-flow-row auto-rows-auto gap-2">
+          <div className="flex flex-col">
             <RequestPreview index={0} />
             <RequestPreview index={1} />
             <RequestPreview index={2} />
@@ -46,17 +45,8 @@ export default function RequestHome() {
           </div>
         </CardContent>
       </Card>
-
-      <Card className="col-span-4 mb-16 md:col-span-3 lg:col-span-6 lg:mb-0">
-        <CardHeader>
-          <CardTitle></CardTitle>
-          <CardDescription></CardDescription>
-        </CardHeader>
-        <CardContent>
-          {/* TODO: insert details of selected request */}
-          <p>Hello world</p>
-        </CardContent>
-        <CardFooter></CardFooter>
+      <Card className="hidden lg:col-span-6 lg:block">
+        <CardContent></CardContent>
       </Card>
     </ThreeColLayout>
   );

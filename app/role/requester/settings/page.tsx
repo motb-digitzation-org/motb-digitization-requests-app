@@ -22,7 +22,7 @@ import { Label } from "@/components/ui/label";
 export default function Settings() {
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 h-[95vh] md:col-span-6 lg:col-span-10">
+      <Card className="col-span-4 md:col-span-6 lg:col-span-10">
         <CardHeader className="text-center">
           <CardTitle>Settings</CardTitle>
           <CardDescription>Your account settings.</CardDescription>
@@ -32,12 +32,13 @@ export default function Settings() {
             <form
               action=""
               method="post"
-              className="grid grid-cols-2 gap-4 w-full md:w-2/3"
+              className="flex flex-col gap-8 lg:w-2/3"
             >
               <div className="wrapper">
                 <Label>First Name</Label>
                 <p>firstName here</p>
               </div>
+
               <div className="input-wrapper">
                 <Label htmlFor="firstName" className="mb-2">
                   First Name
@@ -73,55 +74,55 @@ export default function Settings() {
                 Your changes have been saved.
               </small>
             </form>
-          <div className="flex flex-row gap-2 my-4 ">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant={"destructive"}
-                  type="button"
-                  className="cursor-pointer"
-                >
-                  Delete All Requests
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Are you absolutely sure?</DialogTitle>
-                  <DialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    all of your digitization requests from our servers.
-                  </DialogDescription>
-                </DialogHeader>
-                <Button type="submit" className="cursor-pointer">
-                  I&apos;m sure, delete all requests
-                </Button>
-              </DialogContent>
-            </Dialog>
+            <div className="my-4 flex flex-row gap-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant={"destructive"}
+                    type="button"
+                    className="cursor-pointer"
+                  >
+                    Delete All Requests
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      all of your digitization requests from our servers.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <Button type="submit" className="cursor-pointer">
+                    I&apos;m sure, delete all requests
+                  </Button>
+                </DialogContent>
+              </Dialog>
 
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant={"destructive"}
-                  type="button"
-                  className="cursor-pointer"
-                >
-                  Delete Account
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Are you absolutely sure?</DialogTitle>
-                  <DialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </DialogDescription>
-                </DialogHeader>
-                <Button type="submit" className="cursor-pointer">
-                  I&apos;m sure, delete my account
-                </Button>
-              </DialogContent>
-            </Dialog>
-          </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant={"destructive"}
+                    type="button"
+                    className="cursor-pointer"
+                  >
+                    Delete Account
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove your data from our servers.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <Button type="submit" className="cursor-pointer">
+                    I&apos;m sure, delete my account
+                  </Button>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
         </CardContent>
       </Card>
