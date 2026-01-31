@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function Help() {
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 md:col-span-6 lg:col-span-10">
+      <Card className="col-span-4 mb-20 md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>Help</CardTitle>
           <CardDescription>
@@ -29,10 +29,10 @@ export default function Help() {
             <form
               action=""
               method="post"
-              className="flex w-full flex-col gap-8 lg:w-2/3"
+              className="flex w-full flex-col gap-8 md:w-2/3"
             >
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-4">
-                <div className="input-wrapper">
+              <div className="flex flex-col gap-8 md:flex-row">
+                <div className="input-wrapper w-full">
                   <Label htmlFor="firstName" className="mb-2">
                     First Name{" "}
                     <span className="text-xs text-red-400">(required)</span>
@@ -42,9 +42,11 @@ export default function Help() {
                     name="firstName"
                     id="firstName"
                     defaultValue={"firstName"}
+                    placeholder="First Name"
+                    required
                   />
                 </div>
-                <div className="input-wrapper">
+                <div className="input-wrapper w-full">
                   <Label htmlFor="lastName" className="mb-2">
                     Last Name{" "}
                     <span className="text-xs text-red-400">(required)</span>
@@ -54,6 +56,8 @@ export default function Help() {
                     name="lastName"
                     id="lastName"
                     defaultValue={"lastName"}
+                    placeholder="Last Name"
+                    required
                   />
                 </div>
               </div>
@@ -66,6 +70,8 @@ export default function Help() {
                   name="email"
                   id="email"
                   defaultValue={"email@gmail.com"}
+                  placeholder="Email"
+                  required
                 />
               </div>
               <div className="input-wrapper">
@@ -73,7 +79,7 @@ export default function Help() {
                   Message{" "}
                   <span className="text-xs text-red-400">(required)</span>
                 </Label>
-                <Textarea name="message" id="message"></Textarea>
+                <Textarea name="message" id="message" required></Textarea>
               </div>
               <Button type="submit" className="w-full cursor-pointer">
                 Send Message

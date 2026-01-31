@@ -45,8 +45,51 @@ export default function RequestHome() {
           </div>
         </CardContent>
       </Card>
-      <Card className="hidden lg:col-span-6 lg:block">
-        <CardContent></CardContent>
+      <Card className="hidden overflow-y-auto lg:col-span-6 lg:block">
+        <CardContent>
+          <div className="request-details">
+            <div className="request-info mb-4">
+              <p className="font-bold">Object Classification</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Object Name</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Object Code</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="">Tier</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">On Display?</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Object Location</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Dimensions</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Request Due Date</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Request Type</p>
+              <p>[content]</p>
+            </div>
+            <div className="request-info mb-4">
+              <p className="font-bold">Additional Notes</p>
+              <p>[content]</p>
+            </div>
+          </div>
+        </CardContent>
       </Card>
     </ThreeColLayout>
   );

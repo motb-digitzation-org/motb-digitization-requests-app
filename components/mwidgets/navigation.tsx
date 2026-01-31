@@ -4,10 +4,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "../ui/button";
-import { CircleQuestionMark, House, LogOut, Plus, Settings } from "lucide-react";
-import { ReactElement, useEffect, useState } from "react";
+import {
+  CircleQuestionMark,
+  House,
+  LogOut,
+  Plus,
+  Settings,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ReactElement, useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 export default function Navigation() {
   const navigationList: { label: string; icon: ReactElement; link: string }[] =
@@ -31,8 +37,8 @@ export default function Navigation() {
       {
         label: "Logout",
         icon: <LogOut />,
-        link: "/"
-      }
+        link: "/",
+      },
     ];
 
   const router = useRouter();
@@ -56,7 +62,7 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav id="navigation" className={`grid grid-cols-${navigationList.length} gap-2 p-2 lg:grid-cols-1`}>
+    <nav id="navigation" className="grid grid-cols-5 gap-2 p-2 lg:grid-cols-1">
       {navigationList.map((item, index) => (
         <Tooltip key={index}>
           <TooltipTrigger asChild>

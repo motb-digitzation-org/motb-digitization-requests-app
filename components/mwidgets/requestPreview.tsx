@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
 import {
   Sheet,
   SheetClose,
@@ -11,6 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 interface RequestPreviewProps {
   index: number;
@@ -55,12 +55,32 @@ export default function RequestPreview({ index }: RequestPreviewProps) {
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>This action cannot be undone.</SheetDescription>
-            jioji
+            <SheetTitle>Request Details</SheetTitle>
+            <SheetDescription></SheetDescription>
+            <p className="mb-2">Object Classification</p>
+
+            <p className="mb-2">Object Name</p>
+
+            <p className="mb-2">Object Code</p>
+
+            <p className="mb-2">Tier</p>
+
+            <p className="mb-2">On Display?</p>
+
+            <p className="mb-2">Object Location</p>
+
+            <p className="mb-2">Dimensions</p>
+
+            <p className="mb-2">Request Due Date</p>
+
+            <p className="mb-2">Request Type</p>
+
+            <p className="mb-2">Additional Notes</p>
           </SheetHeader>
           <SheetFooter>
-            <SheetClose>Close</SheetClose>
+            <SheetClose asChild>
+              <Button className="cursor-pointer">Close</Button>
+            </SheetClose>
           </SheetFooter>
         </SheetContent>
       </Sheet>

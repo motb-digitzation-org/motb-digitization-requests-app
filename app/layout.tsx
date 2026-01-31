@@ -4,7 +4,7 @@ import "./globals.css";
 
 const roboto = Roboto({
   variable: "--font-montserrat",
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -19,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.className} antialiased`}
-      >
+      <body className={`${roboto.className} overflow-hidden antialiased`}>
         {children}
       </body>
     </html>

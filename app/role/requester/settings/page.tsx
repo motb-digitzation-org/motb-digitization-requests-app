@@ -32,48 +32,71 @@ export default function Settings() {
             <form
               action=""
               method="post"
-              className="flex flex-col gap-8 lg:w-2/3"
+              className="flex w-full flex-col gap-8 md:w-2/3"
             >
-              <div className="wrapper">
-                <Label>First Name</Label>
-                <p>firstName here</p>
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
+                <div className="wrapper">
+                  <Label>First Name</Label>
+                  <p>firstName here</p>
+                </div>
+                <div className="input-wrapper">
+                  <Label htmlFor="firstName" className="mb-2">
+                    First Name
+                  </Label>
+                  <Input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="New First Name"
+                  />
+                </div>
               </div>
 
-              <div className="input-wrapper">
-                <Label htmlFor="firstName" className="mb-2">
-                  First Name
-                </Label>
-                <Input type="text" name="firstName" id="firstName" />
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
+                <div className="wrapper">
+                  <Label>Last Name</Label>
+                  <p>lastName here</p>
+                </div>
+                <div className="input-wrapper">
+                  <Label htmlFor="lastName" className="mb-2">
+                    Last Name
+                  </Label>
+                  <Input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="New Last Name"
+                  />
+                </div>
               </div>
 
-              <div className="wrapper">
-                <Label>Last Name</Label>
-                <p>lastName here</p>
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
+                <div className="wrapper w-full">
+                  <Label>Email</Label>
+                  <p>email here</p>
+                </div>
+
+                <div className="input-wrapper w-full">
+                  <Label htmlFor="email" className="mb-2">
+                    Email
+                  </Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="New Email"
+                  />
+                </div>
               </div>
 
-              <div className="input-wrapper">
-                <Label htmlFor="lastName" className="mb-2">
-                  Last Name
-                </Label>
-                <Input type="text" name="lastName" id="lastName" />
+              <div className="text-center">
+                <Button type="submit" className="mb-2 w-full">
+                  Save Changes
+                </Button>
+                <small>Your changes have been saved.</small>
               </div>
-              <div className="wrapper">
-                <Label>Email</Label>
-                <p>email here</p>
-              </div>
-              <div className="input-wrapper">
-                <Label htmlFor="email" className="mb-2">
-                  Email
-                </Label>
-                <Input type="email" name="email" id="email" />
-              </div>
-              <Button type="submit" className="col-start-2">
-                Save Changes
-              </Button>
-              <small className="col-start-2 text-center">
-                Your changes have been saved.
-              </small>
             </form>
+
             <div className="my-4 flex flex-row gap-2">
               <Dialog>
                 <DialogTrigger asChild>
