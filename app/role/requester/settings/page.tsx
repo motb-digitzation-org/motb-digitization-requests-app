@@ -18,11 +18,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function Settings() {
+  const [alert, setAlert] = useState<boolean>(false);
+
   return (
     <ThreeColLayout>
-      <Card className="col-span-4 md:col-span-6 lg:col-span-10">
+      <Card className="col-span-4 mb-20 md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>Settings</CardTitle>
           <CardDescription>Your account settings.</CardDescription>
@@ -90,10 +93,17 @@ export default function Settings() {
               </div>
 
               <div className="text-center">
-                <Button type="submit" className="mb-2 w-full">
+                <Button
+                  type="submit"
+                  className="bg-museum-orange hover:bg-museum-dark-orange mb-2 w-full cursor-pointer"
+                >
                   Save Changes
                 </Button>
-                <small>Your changes have been saved.</small>
+                {alert ? (
+                  <small>Your changes have been saved.</small>
+                ) : (
+                  <small className="invisible">Empty</small>
+                )}
               </div>
             </form>
 

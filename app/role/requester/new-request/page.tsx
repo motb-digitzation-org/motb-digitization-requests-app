@@ -375,7 +375,10 @@ export default function NewRequest() {
                 <Textarea name="additionalNotes" id="additionalNotes" />
               </div>
 
-              <Button type="submit" className="cursor-pointer">
+              <Button
+                type="submit"
+                className="bg-museum-orange hover:bg-museum-dark-orange cursor-pointer"
+              >
                 Submit Request
               </Button>
             </form>

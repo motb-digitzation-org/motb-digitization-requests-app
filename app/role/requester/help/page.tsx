@@ -90,7 +90,10 @@ export default function Help() {
                 </Label>
                 <Textarea name="message" id="message" required></Textarea>
               </div>
-              <Button type="submit" className="w-full cursor-pointer">
+              <Button
+                type="submit"
+                className="bg-museum-orange hover:bg-museum-dark-orange w-full cursor-pointer"
+              >
                 Send Message
               </Button>
             </form>

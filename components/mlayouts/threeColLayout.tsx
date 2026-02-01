@@ -14,7 +14,7 @@ export default function ThreeColLayout({
       >
         <Card
           id="mobile-navigation-card"
-          className="rounded-none border-0 bg-gray-900/45 p-4 lg:w-screen lg:rounded-xl lg:bg-white"
+          className="rounded-none border-0 p-4 lg:w-screen lg:rounded-xl"
         >
           <Navigation />
         </Card>

@@ -25,6 +25,22 @@ export default function Home() {
       >
         Login
       </Button>
+
+      <Button
+        onClick={() => {
+          router.push("/role/admin");
+        }}
+      >
+        Admin
+      </Button>
+
+      <Button
+        onClick={() => {
+          router.push("/role/requester/home");
+        }}
+      >
+        User
+      </Button>
     </main>
   );
 }
