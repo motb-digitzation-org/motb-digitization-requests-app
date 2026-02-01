@@ -98,7 +98,9 @@ export default function NewRequest() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="firstName" className="mb-2">
                     First Name{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Input
                     type="text"
@@ -112,7 +114,9 @@ export default function NewRequest() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="lastName" className="mb-2">
                     Last Name{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Input
                     type="text"
@@ -127,7 +131,10 @@ export default function NewRequest() {
 
               <div className="input-wrapper">
                 <Label htmlFor="email" className="mb-2">
-                  Email <span className="text-xs text-red-400">(required)</span>
+                  Email{" "}
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <Input
                   type="email"
@@ -142,7 +149,9 @@ export default function NewRequest() {
               <div className="input-wrapper">
                 <Label htmlFor="classification" className="mb-2">
                   Object Classification{" "}
-                  <span className="text-xs text-red-400">(required)</span>
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <Combobox
                   items={classifications}
@@ -171,7 +180,9 @@ export default function NewRequest() {
               <div className="input-wrapper">
                 <Label htmlFor="objectName" className="mb-2">
                   Object Name{" "}
-                  <span className="text-xs text-red-400">(required)</span>
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <Input
                   type="text"
@@ -186,7 +197,9 @@ export default function NewRequest() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="objectCode" className="mb-2">
                     Object Code{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Input
                     type="text"
@@ -199,7 +212,9 @@ export default function NewRequest() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="tier" className="mb-2">
                     Tier{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Select required>
                     <SelectTrigger className="w-full cursor-pointer">
@@ -224,7 +239,9 @@ export default function NewRequest() {
                 <div className="input-wrapper w-2/3">
                   <Label htmlFor="onDisplay" className="mb-2">
                     On Display?{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <div className="inline-flex items-center gap-2">
                     <Switch
@@ -243,7 +260,9 @@ export default function NewRequest() {
               <div className="input-wrapper">
                 <Label htmlFor="objectLocation" className="mb-2">
                   Object Location{" "}
-                  <span className="text-xs text-red-400">(required)</span>
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <Input
                   type="text"
@@ -257,7 +276,9 @@ export default function NewRequest() {
               <div className="input-wrapper">
                 <Label htmlFor="" className="mb-2">
                   Dimensions{" "}
-                  <span className="text-xs text-red-400">(required)</span>
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <div className="flex flex-row items-center justify-between">
                   <Input
@@ -324,7 +345,9 @@ export default function NewRequest() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="requestType" className="mb-2">
                     Request Type{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Select required>
                     <SelectTrigger className="w-full cursor-pointer">

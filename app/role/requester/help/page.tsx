@@ -35,7 +35,9 @@ export default function Help() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="firstName" className="mb-2">
                     First Name{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Input
                     type="text"
@@ -49,7 +51,9 @@ export default function Help() {
                 <div className="input-wrapper w-full">
                   <Label htmlFor="lastName" className="mb-2">
                     Last Name{" "}
-                    <span className="text-xs text-red-400">(required)</span>
+                    <span className="text-museum-dark-orange text-xs">
+                      (required)
+                    </span>
                   </Label>
                   <Input
                     type="text"
@@ -63,7 +67,10 @@ export default function Help() {
               </div>
               <div className="input-wrapper">
                 <Label htmlFor="email" className="mb-2">
-                  Email <span className="text-xs text-red-400">(required)</span>
+                  Email{" "}
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <Input
                   type="email"
@@ -77,7 +84,9 @@ export default function Help() {
               <div className="input-wrapper">
                 <Label htmlFor="message" className="mb-2">
                   Message{" "}
-                  <span className="text-xs text-red-400">(required)</span>
+                  <span className="text-museum-dark-orange text-xs">
+                    (required)
+                  </span>
                 </Label>
                 <Textarea name="message" id="message" required></Textarea>
               </div>

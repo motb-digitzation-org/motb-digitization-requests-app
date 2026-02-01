@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Roboto, Mulish } from "next/font/google";
 import "./globals.css";
 
 const roboto = Roboto({
-  variable: "--font-montserrat",
+  variable: "--font-roboto",
+  subsets: ["latin"],
+});
+
+const mulish = Mulish({
+  variable: "--font-mulish",
   subsets: ["latin"],
 });
 
@@ -19,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} overflow-hidden antialiased`}>
+      <body className={`${mulish.className} overflow-hidden antialiased`}>
         {children}
       </body>
     </html>

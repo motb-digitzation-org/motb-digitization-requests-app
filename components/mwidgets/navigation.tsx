@@ -68,7 +68,7 @@ export default function Navigation() {
           <TooltipTrigger asChild>
             <Button
               type="button"
-              className="flex w-full cursor-pointer flex-row items-center lg:justify-start"
+              className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
               onClick={() => {
                 router.push(item.link);
               }}
