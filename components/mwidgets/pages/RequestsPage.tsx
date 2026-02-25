@@ -1,3 +1,4 @@
+"use client";
 import ThreeColLayout from "@/components/mlayouts/threeColLayout";
 import RequestPreview from "@/components/mwidgets/requestPreview";
 import {
@@ -7,10 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useEffect, useState } from "react";
 
-export default function RequestHome() {
+export default function RequestsPage() {
+  const [role, setRole] = useState<"requester" | "admin">("requester");
+
+  useEffect(() => {
+    function getRole() {
+      setRole("admin");
+    }
+
+    getRole();
+  }, []);
+
   return (
-    <ThreeColLayout>
+    <ThreeColLayout navRole={role}>
       <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-4 lg:mb-0">
         <CardHeader>
           <CardTitle>All Requests</CardTitle>

@@ -20,7 +20,7 @@ export default function Home() {
 
       <Button
         onClick={() => {
-          router.push("auth/login");
+          router.push("/auth/login");
         }}
       >
         Login
@@ -28,7 +28,7 @@ export default function Home() {
 
       <Button
         onClick={() => {
-          router.push("/role/admin");
+          router.push("/admin/requests");
         }}
       >
         Admin
@@ -36,7 +36,7 @@ export default function Home() {
 
       <Button
         onClick={() => {
-          router.push("/role/requester/home");
+          router.push("/requests");
         }}
       >
         User

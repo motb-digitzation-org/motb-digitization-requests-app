@@ -15,24 +15,31 @@ import { useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
-export default function Navigation() {
+interface NavigationProps {
+  role: "admin" | "requester",
+}
+
+export default function Navigation({role}: NavigationProps) {
   const navigationList: { label: string; icon: ReactElement; link: string }[] =
     [
-      { label: "Home", icon: <House />, link: "/role/requester/home" },
+      { label: "Home", 
+        icon: <House />, 
+        link: role == "admin" ? "/admin/requests" : "/requests" 
+      },
       {
         label: "New Request",
         icon: <Plus />,
-        link: "/role/requester/new-request",
+        link: role == "admin" ? "/admin/requests/new" : "/requests/new",
       },
       {
         label: "Help",
         icon: <CircleQuestionMark />,
-        link: "/role/requester/help",
+        link: role == "admin" ? "/admin/help" : "/help",
       },
       {
         label: "Settings",
         icon: <Settings />,
-        link: "/role/requester/settings",
+        link: role == "admin" ? "/admin/settings" : "/settings",
       },
       {
         label: "Logout",

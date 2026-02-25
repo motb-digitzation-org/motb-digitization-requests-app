@@ -3,8 +3,10 @@ import { Card } from "@/components/ui/card";
 
 export default function ThreeColLayout({
   children,
+  navRole,
 }: Readonly<{
   children: React.ReactNode;
+  navRole: "admin" | "requester";
 }>) {
   return (
     <div id="three-col-layout" className="bg-gray-400">
@@ -16,7 +18,7 @@ export default function ThreeColLayout({
           id="mobile-navigation-card"
           className="rounded-none border-0 p-4 lg:w-screen lg:rounded-xl"
         >
-          <Navigation />
+          <Navigation role={navRole} />
         </Card>
       </div>
 
@@ -25,7 +27,7 @@ export default function ThreeColLayout({
           id="desktop-navigation-card"
           className="hidden lg:col-span-2 lg:inline-block"
         >
-          <Navigation />
+          <Navigation role={navRole} />
         </Card>
         {children}
       </div>

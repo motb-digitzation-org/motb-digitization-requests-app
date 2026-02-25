@@ -18,13 +18,23 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Settings() {
+export default function SettingsPage() {
   const [alert, setAlert] = useState<boolean>(false);
 
+  const [role, setRole] = useState<"requester" | "admin">("requester");
+
+  useEffect(() => {
+    function getRole() {
+      setRole("admin");
+    }
+
+    getRole();
+  }, []);
+
   return (
-    <ThreeColLayout>
+    <ThreeColLayout navRole={role}>
       <Card className="col-span-4 mb-20 md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>Settings</CardTitle>

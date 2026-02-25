@@ -35,9 +35,9 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function NewRequest() {
+export default function NewRequestPage() {
   const classifications = [
     "Amulet (AMU)",
     "Antiquity (ATQ)",
@@ -78,8 +78,18 @@ export default function NewRequest() {
   const [date, setDate] = useState<Date>(); // used for request due date
   const [checked, setChecked] = useState<boolean>(false); // tracks onDisplay
 
+  const [role, setRole] = useState<"requester" | "admin">("requester");
+
+  useEffect(() => {
+    function getRole() {
+      setRole("admin");
+    }
+
+    getRole();
+  }, []);
+
   return (
-    <ThreeColLayout>
+    <ThreeColLayout navRole={role}>
       <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>New Request</CardTitle>
