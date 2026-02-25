@@ -36,8 +36,19 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import { useFormik } from "formik";
 
 export default function NewRequestPage() {
+  const [role, setRole] = useState<"requester" | "admin">("requester");
+
+  useEffect(() => {
+    function getRole() {
+      setRole("admin");
+    }
+
+    getRole();
+  }, []);
+
   const classifications = [
     "Amulet (AMU)",
     "Antiquity (ATQ)",
@@ -75,18 +86,28 @@ export default function NewRequestPage() {
     "Torah Paraphernalia (ARK)",
   ].sort((a, b) => a.localeCompare(b));
 
-  const [date, setDate] = useState<Date>(); // used for request due date
-  const [checked, setChecked] = useState<boolean>(false); // tracks onDisplay
-
-  const [role, setRole] = useState<"requester" | "admin">("requester");
-
-  useEffect(() => {
-    function getRole() {
-      setRole("admin");
-    }
-
-    getRole();
-  }, []);
+  const formik = useFormik({
+    initialValues: {
+      firstName: "firstName",
+      lastName: "lastName",
+      email: "email@gmail.com",
+      classification: "",
+      objectName: "",
+      objectCode: "",
+      tier: "",
+      onDisplay: false,
+      objectLocation: "",
+      width: "",
+      height: "",
+      depth: "",
+      requestDueDate: undefined,
+      requestType: "",
+      additionalNotes: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   return (
     <ThreeColLayout navRole={role}>
@@ -100,8 +121,7 @@ export default function NewRequestPage() {
         <CardContent>
           <div className="flex flex-col items-center justify-center">
             <form
-              action=""
-              method="post"
+              onSubmit={formik.handleSubmit}
               className="flex flex-col gap-8 lg:w-2/3"
             >
               <div className="flex flex-col gap-8 md:flex-row">
@@ -119,6 +139,9 @@ export default function NewRequestPage() {
                     defaultValue={"firstName"}
                     placeholder="First Name"
                     required
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.firstName}
                   />
                 </div>
                 <div className="input-wrapper w-full">
@@ -135,6 +158,9 @@ export default function NewRequestPage() {
                     defaultValue={"lastName"}
                     placeholder="Last Name"
                     required
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.lastName}
                   />
                 </div>
               </div>
@@ -153,6 +179,9 @@ export default function NewRequestPage() {
                   defaultValue={"email@gmail.com"}
                   placeholder="Email"
                   required
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
                 />
               </div>
 
@@ -166,13 +195,17 @@ export default function NewRequestPage() {
                 <Combobox
                   items={classifications}
                   autoHighlight
-                  name="classification"
                   id="classification"
+                  value={formik.values.classification || undefined}
+                  onValueChange={(value) => {
+                    formik.setFieldValue("classification", value);
+                    formik.setFieldTouched("classification", true);
+                  }}
+                  required
                 >
                   <ComboboxInput
                     placeholder="Select a classification"
                     showClear
-                    required
                   />
                   <ComboboxContent>
                     <ComboboxEmpty>No items found.</ComboboxEmpty>
@@ -200,6 +233,9 @@ export default function NewRequestPage() {
                   id="objectName"
                   placeholder="Ex: Aitken Bible"
                   required
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.objectName}
                 />
               </div>
 
@@ -217,16 +253,22 @@ export default function NewRequestPage() {
                     id="objectCode"
                     placeholder="Ex: MOTB.BIB.004494"
                     required
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.objectCode}
                   />
                 </div>
                 <div className="input-wrapper w-full">
                   <Label htmlFor="tier" className="mb-2">
-                    Tier{" "}
-                    <span className="text-museum-dark-orange text-xs">
-                      (required)
-                    </span>
+                    Tier
                   </Label>
-                  <Select required>
+                  <Select
+                      value={formik.values.tier || undefined}
+                    onValueChange={(value) => {
+                      formik.setFieldValue("tier", value);
+                      formik.setFieldTouched("tier", true); // optional
+                    }}
+                  >
                     <SelectTrigger className="w-full cursor-pointer">
                       <SelectValue placeholder="Tier" />
                     </SelectTrigger>
@@ -248,47 +290,41 @@ export default function NewRequestPage() {
                 </div>
                 <div className="input-wrapper w-2/3">
                   <Label htmlFor="onDisplay" className="mb-2">
-                    On Display?{" "}
-                    <span className="text-museum-dark-orange text-xs">
-                      (required)
-                    </span>
+                    On Display?
                   </Label>
                   <div className="inline-flex items-center gap-2">
                     <Switch
-                      name="onDisplay"
                       id="onDisplay"
                       className="cursor-pointer"
-                      onCheckedChange={() => {
-                        setChecked(!checked);
+                      checked={formik.values.onDisplay}
+                      onCheckedChange={(value) => {
+                        formik.setFieldValue("onDisplay", value);
+                        formik.setFieldTouched("onDisplay", true);
                       }}
                     />
-                    {checked ? <p>Yes</p> : <p>No</p>}
+                    {formik.values.onDisplay ? <p>Yes</p> : <p>No</p>}
                   </div>
                 </div>
               </div>
 
               <div className="input-wrapper">
                 <Label htmlFor="objectLocation" className="mb-2">
-                  Object Location{" "}
-                  <span className="text-museum-dark-orange text-xs">
-                    (required)
-                  </span>
+                  Object Location
                 </Label>
                 <Input
                   type="text"
                   name="objectLocation"
                   id="objectLocation"
                   placeholder="Ex: Cabinet 9, Shelf 7"
-                  required
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.objectLocation}
                 />
               </div>
 
               <div className="input-wrapper">
                 <Label htmlFor="" className="mb-2">
-                  Dimensions{" "}
-                  <span className="text-museum-dark-orange text-xs">
-                    (required)
-                  </span>
+                  Dimensions
                 </Label>
                 <div className="flex flex-row items-center justify-between">
                   <Input
@@ -296,7 +332,9 @@ export default function NewRequestPage() {
                     name="width"
                     id="width"
                     placeholder="Width (W)"
-                    required
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.width}
                   />
                   <hr className="w-8 border-black" />
                   <Input
@@ -304,7 +342,9 @@ export default function NewRequestPage() {
                     name="height"
                     id="height"
                     placeholder="Height (H)"
-                    required
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.height}
                   />
                   <hr className="w-8 border-black" />
                   <Input
@@ -312,7 +352,9 @@ export default function NewRequestPage() {
                     name="depth"
                     id="depth"
                     placeholder="Depth (D)"
-                    required
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.depth}
                   />
                 </div>
               </div>
@@ -326,7 +368,6 @@ export default function NewRequestPage() {
                     <PopoverTrigger
                       asChild
                       className="w-full"
-                      name="requestDueDate"
                       id="requestDueDate"
                     >
                       <Button
@@ -334,8 +375,8 @@ export default function NewRequestPage() {
                         id="date-picker-simple"
                         className="cursor-pointer justify-start font-normal"
                       >
-                        {date ? (
-                          format(date, "P")
+                        {formik.values.requestDueDate ? (
+                          format(formik.values.requestDueDate, "P")
                         ) : (
                           <span className="text-gray-500">Pick a date</span>
                         )}
@@ -344,9 +385,12 @@ export default function NewRequestPage() {
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        defaultMonth={date}
+                        selected={formik.values.requestDueDate}
+                        onSelect={(date) => {
+                          formik.setFieldValue("requestDueDate", date);
+                          formik.setFieldTouched("requestDueDate", true);
+                        }}
+                        defaultMonth={formik.values.requestDueDate || undefined}
                       />
                     </PopoverContent>
                   </Popover>
@@ -359,7 +403,14 @@ export default function NewRequestPage() {
                       (required)
                     </span>
                   </Label>
-                  <Select required>
+                  <Select
+                    onValueChange={(value) => {
+                      formik.setFieldValue("requestType", value);
+                      formik.setFieldTouched("requestType", true);
+                    }}
+                    value={formik.values.requestType || undefined}
+                    required
+                  >
                     <SelectTrigger className="w-full cursor-pointer">
                       <SelectValue placeholder="Request Type" />
                     </SelectTrigger>
@@ -382,7 +433,13 @@ export default function NewRequestPage() {
                 <Label htmlFor="additionalNotes" className="mb-2">
                   Additional Notes
                 </Label>
-                <Textarea name="additionalNotes" id="additionalNotes" />
+                <Textarea
+                  name="additionalNotes"
+                  id="additionalNotes"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.additionalNotes}
+                />
               </div>
 
               <Button

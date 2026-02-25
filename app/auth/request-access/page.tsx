@@ -28,7 +28,7 @@ export default function RequestAccess() {
             <Image
               src={"/MOTB-BG-Img-2.jpg"}
               alt="dd"
-              fill={"true"}
+              fill={true}
               objectFit="cover"
             />
           </div>
