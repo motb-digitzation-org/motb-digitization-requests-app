@@ -5,6 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
+  Bell,
   CircleQuestionMark,
   House,
   LogOut,
@@ -16,20 +17,26 @@ import { ReactElement, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 interface NavigationProps {
-  role: "admin" | "requester",
+  role: "admin" | "requester";
 }
 
-export default function Navigation({role}: NavigationProps) {
+export default function Navigation({ role }: NavigationProps) {
   const navigationList: { label: string; icon: ReactElement; link: string }[] =
     [
-      { label: "Home", 
-        icon: <House />, 
-        link: role == "admin" ? "/admin/requests" : "/requests" 
+      {
+        label: "Home",
+        icon: <House />,
+        link: role == "admin" ? "/admin/requests" : "/requests",
       },
       {
         label: "New Request",
         icon: <Plus />,
         link: role == "admin" ? "/admin/requests/new" : "/requests/new",
+      },
+      {
+        label: "Notifications",
+        icon: <Bell />,
+        link: "/admin/notifications",
       },
       {
         label: "Help",
@@ -50,7 +57,7 @@ export default function Navigation({role}: NavigationProps) {
 
   const router = useRouter();
 
-  // ---- dynamically switch between "right" and "left" based on screen size
+  // ---- dynamically switch tooltip between "right" and "left" based on screen size
   const [side, setSide] = useState<"top" | "right">("top");
 
   useEffect(() => {
@@ -69,26 +76,49 @@ export default function Navigation({role}: NavigationProps) {
   }, []);
 
   return (
-    <nav id="navigation" className="grid grid-cols-5 gap-2 p-2 lg:grid-cols-1">
-      {navigationList.map((item, index) => (
-        <Tooltip key={index}>
-          <TooltipTrigger asChild>
-            <Button
-              type="button"
-              className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
-              onClick={() => {
-                router.push(item.link);
-              }}
-            >
-              {item.icon}{" "}
-              <span className="hidden lg:inline-block">{item.label}</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side={side}>
-            <p>{item.label}</p>
-          </TooltipContent>
-        </Tooltip>
-      ))}
+    <nav
+      id="navigation"
+      className="grid auto-cols-auto grid-flow-col gap-2 p-2 lg:grid-flow-row lg:grid-cols-1"
+    >
+      {role == "admin"
+        ? navigationList.filter((items) => items.label !== "Help").map((item, index) => (
+            <Tooltip key={index}>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
+                  onClick={() => {
+                    router.push(item.link);
+                  }}
+                >
+                  {item.icon}{" "}
+                  <span className="hidden lg:inline-block">{item.label}</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side={side}>
+                <p>{item.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))
+        : navigationList.filter((items) => items.label !== "Notification").map((item, index) => (
+            <Tooltip key={index}>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
+                  onClick={() => {
+                    router.push(item.link);
+                  }}
+                >
+                  {item.icon}{" "}
+                  <span className="hidden lg:inline-block">{item.label}</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side={side}>
+                <p>{item.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
     </nav>
   );
 }

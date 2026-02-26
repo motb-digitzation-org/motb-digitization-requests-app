@@ -35,8 +35,8 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 
 export default function NewRequestPage() {
   const [role, setRole] = useState<"requester" | "admin">("requester");
@@ -86,7 +86,25 @@ export default function NewRequestPage() {
     "Torah Paraphernalia (ARK)",
   ].sort((a, b) => a.localeCompare(b));
 
-  const formik = useFormik({
+  interface RequestFormValues {
+    firstName: string;
+    lastName: string;
+    email: string;
+    classification: string; // always controlled, empty string when none
+    objectName: string;
+    objectCode: string;
+    tier: string;
+    onDisplay: boolean;
+    objectLocation: string;
+    width: string;
+    height: string;
+    depth: string;
+    requestDueDate?: Date;
+    requestType: string;
+    additionalNotes: string;
+  }
+
+  const formik = useFormik<RequestFormValues>({
     initialValues: {
       firstName: "firstName",
       lastName: "lastName",
@@ -106,6 +124,8 @@ export default function NewRequestPage() {
     },
     onSubmit: (values) => {
       console.log(values);
+      // TODO: push values to database
+      formik.resetForm();
     },
   });
 
@@ -136,7 +156,6 @@ export default function NewRequestPage() {
                     type="text"
                     name="firstName"
                     id="firstName"
-                    defaultValue={"firstName"}
                     placeholder="First Name"
                     required
                     onChange={formik.handleChange}
@@ -155,7 +174,6 @@ export default function NewRequestPage() {
                     type="text"
                     name="lastName"
                     id="lastName"
-                    defaultValue={"lastName"}
                     placeholder="Last Name"
                     required
                     onChange={formik.handleChange}
@@ -176,7 +194,6 @@ export default function NewRequestPage() {
                   type="email"
                   name="email"
                   id="email"
-                  defaultValue={"email@gmail.com"}
                   placeholder="Email"
                   required
                   onChange={formik.handleChange}
@@ -196,7 +213,7 @@ export default function NewRequestPage() {
                   items={classifications}
                   autoHighlight
                   id="classification"
-                  value={formik.values.classification || undefined}
+                  value={formik.values.classification}
                   onValueChange={(value) => {
                     formik.setFieldValue("classification", value);
                     formik.setFieldTouched("classification", true);
@@ -263,7 +280,7 @@ export default function NewRequestPage() {
                     Tier
                   </Label>
                   <Select
-                      value={formik.values.tier || undefined}
+                    value={formik.values.tier}
                     onValueChange={(value) => {
                       formik.setFieldValue("tier", value);
                       formik.setFieldTouched("tier", true); // optional
@@ -408,7 +425,7 @@ export default function NewRequestPage() {
                       formik.setFieldValue("requestType", value);
                       formik.setFieldTouched("requestType", true);
                     }}
-                    value={formik.values.requestType || undefined}
+                    value={formik.values.requestType}
                     required
                   >
                     <SelectTrigger className="w-full cursor-pointer">

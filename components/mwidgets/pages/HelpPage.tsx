@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function HelpPage() {
@@ -19,15 +20,29 @@ export default function HelpPage() {
 
   useEffect(() => {
     function getRole() {
-      setRole("admin");
+      setRole("requester");
     }
 
     getRole();
   }, []);
 
+  const formik = useFormik({
+    initialValues: {
+      firstName: "firstName",
+      lastName: "lasName",
+      email: "email@gmail.com",
+      message: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+      // TODO: save message to db to display to admin
+      formik.resetForm();
+    },
+  });
+
   return (
     <ThreeColLayout navRole={role}>
-      <Card className="col-span-4 mb-20 md:col-span-6 lg:col-span-10 lg:mb-0">
+      <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>Help</CardTitle>
           <CardDescription>
@@ -38,8 +53,7 @@ export default function HelpPage() {
         <CardContent>
           <div className="flex flex-col items-center justify-center">
             <form
-              action=""
-              method="post"
+              onSubmit={formik.handleSubmit}
               className="flex w-full flex-col gap-8 md:w-2/3"
             >
               <div className="flex flex-col gap-8 md:flex-row">
@@ -54,9 +68,11 @@ export default function HelpPage() {
                     type="text"
                     name="firstName"
                     id="firstName"
-                    defaultValue={"firstName"}
                     placeholder="First Name"
                     required
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.firstName}
                   />
                 </div>
                 <div className="input-wrapper w-full">
@@ -70,9 +86,11 @@ export default function HelpPage() {
                     type="text"
                     name="lastName"
                     id="lastName"
-                    defaultValue={"lastName"}
                     placeholder="Last Name"
                     required
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.lastName}
                   />
                 </div>
               </div>
@@ -87,9 +105,11 @@ export default function HelpPage() {
                   type="email"
                   name="email"
                   id="email"
-                  defaultValue={"email@gmail.com"}
                   placeholder="Email"
                   required
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
                 />
               </div>
               <div className="input-wrapper">
@@ -99,7 +119,14 @@ export default function HelpPage() {
                     (required)
                   </span>
                 </Label>
-                <Textarea name="message" id="message" required></Textarea>
+                <Textarea
+                  name="message"
+                  id="message"
+                  required
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.message}
+                ></Textarea>
               </div>
               <Button
                 type="submit"

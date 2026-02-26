@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
@@ -33,9 +34,22 @@ export default function SettingsPage() {
     getRole();
   }, []);
 
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+      // TODO: update user credentials in db
+      formik.resetForm();
+    },
+  });
+
   return (
     <ThreeColLayout navRole={role}>
-      <Card className="col-span-4 mb-20 md:col-span-6 lg:col-span-10 lg:mb-0">
+      <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-10 lg:mb-0">
         <CardHeader className="text-center">
           <CardTitle>Settings</CardTitle>
           <CardDescription>Your account settings.</CardDescription>
@@ -43,8 +57,7 @@ export default function SettingsPage() {
         <CardContent>
           <div className="flex flex-col items-center justify-center">
             <form
-              action=""
-              method="post"
+              onSubmit={formik.handleSubmit}
               className="flex w-full flex-col gap-8 md:w-2/3"
             >
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
@@ -61,6 +74,9 @@ export default function SettingsPage() {
                     name="firstName"
                     id="firstName"
                     placeholder="New First Name"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.firstName}
                   />
                 </div>
               </div>
@@ -79,6 +95,9 @@ export default function SettingsPage() {
                     name="lastName"
                     id="lastName"
                     placeholder="New Last Name"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.lastName}
                   />
                 </div>
               </div>
@@ -98,6 +117,9 @@ export default function SettingsPage() {
                     name="email"
                     id="email"
                     placeholder="New Email"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
                   />
                 </div>
               </div>

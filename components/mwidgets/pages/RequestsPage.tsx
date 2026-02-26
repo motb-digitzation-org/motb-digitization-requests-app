@@ -15,7 +15,7 @@ export default function RequestsPage() {
 
   useEffect(() => {
     function getRole() {
-      setRole("admin");
+      setRole("requester");
     }
 
     getRole();
