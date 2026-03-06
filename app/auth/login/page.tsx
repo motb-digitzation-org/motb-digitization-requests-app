@@ -20,8 +20,8 @@ export default function Login() {
   const [alert, setAlert] = useState<boolean>(false);
 
   return (
-    <div className="grid h-screen grid-cols-4 items-center bg-gray-300 p-4 md:grid-cols-6 lg:grid-cols-12">
-      <Card className="col-span-4 md:col-start-2 lg:col-span-8 lg:col-start-3 lg:h-[80vh]">
+    <div className="grid h-screen grid-cols-4 items-center p-4 md:grid-cols-6 lg:grid-cols-12">
+      <Card className="col-span-4 md:col-start-2 lg:col-span-8 lg:col-start-3">
         <CardContent className="grid grid-cols-1 gap-4 lg:h-full lg:grid-cols-2">
           <div className="image-wrapper hidden lg:relative lg:inline-block">
             <Image
@@ -79,6 +79,7 @@ export default function Login() {
                 )}
               </div>
             </form>
+            <div className="spacer lg:h-50"></div>
           </div>
         </CardContent>
         <CardFooter className="flex justify-center">

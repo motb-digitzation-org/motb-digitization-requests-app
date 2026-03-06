@@ -1,5 +1,6 @@
 import Navigation from "@/components/mwidgets/navigation";
 import { Card } from "@/components/ui/card";
+import { useEffect } from "react";
 
 export default function ThreeColLayout({
   children,
@@ -8,6 +9,14 @@ export default function ThreeColLayout({
   children: React.ReactNode;
   navRole: "admin" | "requester";
 }>) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   return (
     <div id="three-col-layout" className="bg-gray-400">
       <div
