@@ -20,7 +20,7 @@ export default function HelpPage() {
 
   useEffect(() => {
     function getRole() {
-      setRole("requester");
+      setRole("admin");
     }
 
     getRole();

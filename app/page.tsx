@@ -1,9 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
+
+  useEffect(() => {
+    document.body.style.backgroundColor = "white";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
 
   return (
     <main className="h-screen overflow-y-auto p-4">
@@ -40,7 +49,7 @@ export default function Home() {
           The application operates using role-based access, requesters and
           administrators can do the following:
         </p>
-        <div className="my-2 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="my-2 grid grid-cols-2 gap-4 md:grid-cols-3">
           <h3 className="font-bold">Requesters</h3>
           <ul className="list-disc">
             <li>Submit new digitisation requests</li>
@@ -49,7 +58,7 @@ export default function Home() {
             <li>Access request history</li>
           </ul>
         </div>
-        <div className="my-2 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="my-2 grid grid-cols-2 gap-4 md:grid-cols-3">
           <h3 className="font-bold">Fulfillers / Administrators</h3>
           <ul className="list-disc">
             <li>View all submitted requests</li>
@@ -90,7 +99,7 @@ export default function Home() {
           available.
         </p>
 
-        <div className="button-wrapper mb-8 grid grid-cols-4 md:grid-cols-6 lx:grid-cols-8 gap-4">
+        <div className="button-wrapper lx:grid-cols-8 mb-8 grid grid-cols-4 gap-4 md:grid-cols-6">
           <Button
             className="bg-museum-orange hover:bg-museum-dark-orange cursor-pointer font-bold"
             onClick={() => {

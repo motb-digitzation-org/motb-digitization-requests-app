@@ -15,7 +15,7 @@ export default function RequestsPage() {
 
   useEffect(() => {
     function getRole() {
-      setRole("requester");
+      setRole("admin");
     }
 
     getRole();
@@ -59,6 +59,7 @@ export default function RequestsPage() {
       </Card>
       <Card className="hidden overflow-y-auto lg:col-span-6 lg:block">
         <CardContent>
+          {/* TODO: turn this into a form so I can update/delete content */}
           <div className="request-details">
             <div className="request-info mb-4">
               <p className="font-bold">Object Classification</p>
