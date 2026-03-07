@@ -4,6 +4,7 @@ import {
   boolean,
   index,
   integer,
+  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -17,12 +18,16 @@ import {
  * Varchar = a string with a max length constraint; use when you require strict length limits
  */
 
+// ============ ENUMS = table constraints and restrictions for data types
+export const userRoleEnum = pgEnum("user_role", ["requester", "fulfiller"]);
+
 // ============ TABLE SCHEMAS
 export const usersTable = pgTable("users", {
   id: bigserial("id", { mode: "number" }).primaryKey(),
   firstName: varchar("first_name", { length: 255 }).notNull(),
   lastName: varchar("last_name", { length: 255 }).notNull(),
   email: text("email").notNull().unique(),
+  role: userRoleEnum("role").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

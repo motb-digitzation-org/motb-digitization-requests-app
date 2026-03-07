@@ -1,4 +1,5 @@
 "use client";
+import { getUser } from "@/app/database/actions/userActions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useFormik } from "formik";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,6 +20,25 @@ import { useState } from "react";
 export default function Login() {
   const router = useRouter();
   const [alert, setAlert] = useState<boolean>(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    onSubmit: async (values) => {
+      const response = await getUser(values.email);
+
+      if (response) {
+        window.sessionStorage.setItem("user", JSON.stringify(response[0]));
+        if (response[0].role === "requester") {
+          router.push("/requests");
+        } else {
+          router.push("/admin/requests");
+        }
+      }
+      setAlert(true);
+    },
+  });
 
   return (
     <div className="grid h-screen grid-cols-4 items-center p-4 md:grid-cols-6 lg:grid-cols-12">
@@ -29,6 +50,7 @@ export default function Login() {
               alt={"museum of the bible"}
               fill={true}
               objectFit="cover"
+              className="rounded-md"
             />
           </div>
 
@@ -45,7 +67,10 @@ export default function Login() {
               </CardDescription>
             </div>
 
-            <form action="" method="post" className="flex flex-col gap-8">
+            <form
+              className="flex flex-col gap-8"
+              onSubmit={formik.handleSubmit}
+            >
               <div className="input-wrapper">
                 <Label htmlFor="email" className="mb-2">
                   Email{" "}
@@ -60,6 +85,9 @@ export default function Login() {
                   placeholder="Email"
                   required
                   autoComplete="true"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
                 />
               </div>
               <div className="text-center">
@@ -71,11 +99,11 @@ export default function Login() {
                 </Button>
                 {alert ? (
                   <small>
-                    There was an error logging in. Please try again or contact
-                    your administrator.
+                    There was an error logging in. Please try again, request
+                    access, or contact your administrator.
                   </small>
                 ) : (
-                  <small className="invisible">Empty</small>
+                  <small className="cursor-default text-white">Empty</small>
                 )}
               </div>
             </form>

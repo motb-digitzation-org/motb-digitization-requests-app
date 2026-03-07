@@ -103,18 +103,18 @@ export default function Home() {
           <Button
             className="bg-museum-orange hover:bg-museum-dark-orange cursor-pointer font-bold"
             onClick={() => {
-              router.push("/auth/request-access");
-            }}
-          >
-            Request Access
-          </Button>
-          <Button
-            className="bg-museum-teal cursor-pointer font-bold hover:bg-teal-800"
-            onClick={() => {
               router.push("/auth/login");
             }}
           >
             Login
+          </Button>
+          <Button
+            className="bg-museum-teal cursor-pointer font-bold hover:bg-teal-800"
+            onClick={() => {
+              router.push("/auth/request-access");
+            }}
+          >
+            Request Access
           </Button>
         </div>
       </div>

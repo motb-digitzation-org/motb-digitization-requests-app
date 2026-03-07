@@ -1,4 +1,5 @@
 "use client";
+import { createUser } from "@/app/database/actions/userActions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,15 +11,46 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useFormik } from "formik";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function RequestAccess() {
-  const router = useRouter();
   const [alert, setAlert] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      role: "requester",
+    },
+    onSubmit: async (values) => {
+      const response = await createUser(
+        values.firstName,
+        values.lastName,
+        values.email,
+        values.role as "requester" | "fulfiller",
+      );
+
+      if (response.success) {
+        setAlertMessage(
+          " Thank you for your submission. An admin will contact you soon.",
+        );
+        formik.resetForm();
+      } else {
+        setAlertMessage(
+          response.message === "User already exists"
+            ? "This email already exists. Please login."
+            : "There was an error registering. Please try again or contact the admin.",
+        );
+      }
+      setAlert(true);
+    },
+  });
 
   return (
     <div className="grid h-screen grid-cols-4 items-center bg-gray-300 p-4 md:grid-cols-6 lg:grid-cols-12">
@@ -30,6 +62,7 @@ export default function RequestAccess() {
               alt="dd"
               fill={true}
               objectFit="cover"
+              className="rounded-md"
             />
           </div>
 
@@ -44,7 +77,10 @@ export default function RequestAccess() {
                 Request access to the application.
               </CardDescription>
             </div>
-            <form action="" method="post" className="flex flex-col gap-8">
+            <form
+              className="flex flex-col gap-8"
+              onSubmit={formik.handleSubmit}
+            >
               <div className="grid grid-cols-2 gap-4">
                 <div className="input-wrapper">
                   <Label htmlFor="first-name" className="mb-2">
@@ -60,6 +96,9 @@ export default function RequestAccess() {
                     id="firstName"
                     required
                     autoComplete="true"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.firstName}
                   />
                 </div>
                 <div className="input-wrapper">
@@ -76,6 +115,9 @@ export default function RequestAccess() {
                     id="lastName"
                     required
                     autoComplete="true"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.lastName}
                   />
                 </div>
               </div>
@@ -93,6 +135,9 @@ export default function RequestAccess() {
                   id="email"
                   required
                   autoComplete="true"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
                 />
               </div>
               <div className="input-wrapper">
@@ -102,7 +147,18 @@ export default function RequestAccess() {
                     (required)
                   </span>
                 </Label>
-                <RadioGroup defaultValue="requester">
+                <RadioGroup
+                  defaultValue={formik.values.role}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  id="role"
+                  name="role"
+                  onValueChange={(value) => {
+                    formik.setFieldValue("role", value);
+                    formik.setFieldTouched("role", true);
+                  }}
+                  required
+                >
                   <div className="flex items-center gap-3">
                     <RadioGroupItem value="requester" id="requester" />
                     <Label htmlFor="requester">
@@ -112,14 +168,14 @@ export default function RequestAccess() {
                   <div className="flex items-center gap-3">
                     <RadioGroupItem value="fulfiller" id="fulfiller" />
                     <Label htmlFor="fulfiller">
-                      Fulfiller - Digitises objects
+                      Fulfiller - Digitizes objects (= Admin Access)
                     </Label>
                   </div>
                 </RadioGroup>
               </div>
               <div className="text-center">
                 <Button
-                  type="button"
+                  type="submit"
                   className="bg-museum-orange hover:bg-museum-dark-orange w-full cursor-pointer"
                   onClick={() => {
                     setAlert(true);
@@ -128,12 +184,9 @@ export default function RequestAccess() {
                   Request Access
                 </Button>
                 {alert ? (
-                  <small>
-                    Thank you for your submission. An admin will contact you
-                    soon.
-                  </small>
+                  <small>{alertMessage}</small>
                 ) : (
-                  <small className="invisible">Empty</small>
+                  <small className="text-white cursor-default">Empty</small>
                 )}
               </div>
             </form>

@@ -1,3 +1,4 @@
+CREATE TYPE "public"."user_role" AS ENUM('requester', 'fulfiller');--> statement-breakpoint
 CREATE TABLE "requests" (
 	"id" bigserial PRIMARY KEY NOT NULL,
 	"object_class" text NOT NULL,
@@ -41,6 +42,7 @@ CREATE TABLE "users" (
 	"first_name" varchar(255) NOT NULL,
 	"last_name" varchar(255) NOT NULL,
 	"email" text NOT NULL,
+	"role" "user_role" NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email")
