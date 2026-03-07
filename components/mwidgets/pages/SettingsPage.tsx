@@ -24,11 +24,11 @@ import { useEffect, useState } from "react";
 export default function SettingsPage() {
   const [alert, setAlert] = useState<boolean>(false);
 
-  const [role, setRole] = useState<"requester" | "admin">("requester");
+  const [role, setRole] = useState<"requester" | "fulfiller">("requester");
 
   useEffect(() => {
     function getRole() {
-      setRole("admin");
+      setRole("fulfiller");
     }
 
     getRole();

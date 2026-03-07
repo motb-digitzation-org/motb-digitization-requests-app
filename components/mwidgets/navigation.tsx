@@ -17,7 +17,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 interface NavigationProps {
-  role: "admin" | "requester";
+  role: "fulfiller" | "requester";
 }
 
 export default function Navigation({ role }: NavigationProps) {
@@ -26,12 +26,12 @@ export default function Navigation({ role }: NavigationProps) {
       {
         label: "Home",
         icon: <House />,
-        link: role == "admin" ? "/admin/requests" : "/requests",
+        link: role == "fulfiller" ? "/admin/requests" : "/requests",
       },
       {
         label: "New Request",
         icon: <Plus />,
-        link: role == "admin" ? "/admin/requests/new" : "/requests/new",
+        link: role == "fulfiller" ? "/admin/requests/new" : "/requests/new",
       },
       {
         label: "Notifications",
@@ -41,12 +41,12 @@ export default function Navigation({ role }: NavigationProps) {
       {
         label: "Help",
         icon: <CircleQuestionMark />,
-        link: role == "admin" ? "/admin/help" : "/help",
+        link: role == "fulfiller" ? "/admin/help" : "/help",
       },
       {
         label: "Settings",
         icon: <Settings />,
-        link: role == "admin" ? "/admin/settings" : "/settings",
+        link: role == "fulfiller" ? "/admin/settings" : "/settings",
       },
       {
         label: "Logout",
@@ -80,45 +80,56 @@ export default function Navigation({ role }: NavigationProps) {
       id="navigation"
       className="grid auto-cols-auto grid-flow-col gap-2 p-2 lg:grid-flow-row lg:grid-cols-1"
     >
-      {role == "admin"
-        ? navigationList.filter((items) => items.label !== "Help").map((item, index) => (
-            <Tooltip key={index}>
-              <TooltipTrigger asChild>
-                <Button
-                  type="button"
-                  className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
-                  onClick={() => {
-                    router.push(item.link);
-                  }}
-                >
-                  {item.icon}{" "}
-                  <span className="hidden lg:inline-block">{item.label}</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side={side}>
-                <p>{item.label}</p>
-              </TooltipContent>
-            </Tooltip>
-          ))
-        : navigationList.filter((items) => items.label !== "Notification").map((item, index) => (
-            <Tooltip key={index}>
-              <TooltipTrigger asChild>
-                <Button
-                  type="button"
-                  className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
-                  onClick={() => {
-                    router.push(item.link);
-                  }}
-                >
-                  {item.icon}{" "}
-                  <span className="hidden lg:inline-block">{item.label}</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side={side}>
-                <p>{item.label}</p>
-              </TooltipContent>
-            </Tooltip>
-          ))}
+      {role == "fulfiller"
+        ? navigationList
+            .filter((items) => items.label !== "Help")
+            .map((item, index) => (
+              <Tooltip key={index}>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
+                    onClick={() => {
+                      if (item.label === "Logout") {
+                        window.sessionStorage.removeItem("user");
+                      }
+
+                      router.push(item.link);
+                    }}
+                  >
+                    {item.icon}{" "}
+                    <span className="hidden lg:inline-block">{item.label}</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side={side}>
+                  <p>{item.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))
+        : navigationList
+            .filter((items) => items.label !== "Notification")
+            .map((item, index) => (
+              <Tooltip key={index}>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    className="bg-museum-orange hover:bg-museum-dark-orange flex w-full cursor-pointer flex-row items-center lg:justify-start"
+                    onClick={() => {
+                      if (item.label === "Logout") {
+                        window.sessionStorage.removeItem("user");
+                      }
+                      router.push(item.link);
+                    }}
+                  >
+                    {item.icon}{" "}
+                    <span className="hidden lg:inline-block">{item.label}</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side={side}>
+                  <p>{item.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
     </nav>
   );
 }

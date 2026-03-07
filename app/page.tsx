@@ -16,20 +16,6 @@ export default function Home() {
 
   return (
     <main className="h-screen overflow-y-auto p-4">
-      <Button
-        onClick={() => {
-          router.push("/admin/requests");
-        }}
-      >
-        Admin
-      </Button>
-      <Button
-        onClick={() => {
-          router.push("/requests");
-        }}
-      >
-        User
-      </Button>
       <h1 className="my-2">Welcome to the Digitisation Requests Portal</h1>
       <div className="my-2">
         <h2>What This Application Does</h2>

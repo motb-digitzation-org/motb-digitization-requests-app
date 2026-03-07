@@ -7,7 +7,7 @@ export default function ThreeColLayout({
   navRole,
 }: Readonly<{
   children: React.ReactNode;
-  navRole: "admin" | "requester";
+  navRole: "fulfiller" | "requester";
 }>) {
   useEffect(() => {
     document.body.style.overflow = "hidden";

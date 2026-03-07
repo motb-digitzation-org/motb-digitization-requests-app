@@ -39,11 +39,11 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function NewRequestPage() {
-  const [role, setRole] = useState<"requester" | "admin">("requester");
+  const [role, setRole] = useState<"requester" | "fulfiller">("requester");
 
   useEffect(() => {
     function getRole() {
-      setRole("admin");
+      setRole("fulfiller");
     }
 
     getRole();
