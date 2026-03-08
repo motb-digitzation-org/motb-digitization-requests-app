@@ -16,21 +16,36 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function HelpPage() {
+  const [user, setUser] = useState<{
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: "requester" | "fulfiller";
+    createdAt: string;
+    updatedAt: string;
+  } | null>(null);
   const [role, setRole] = useState<"requester" | "fulfiller">("requester");
 
   useEffect(() => {
-    function getRole() {
-      setRole("fulfiller");
-    }
+    function getUser() {
+      const userData = window.sessionStorage.getItem("user");
 
-    getRole();
+      if (userData) {
+        const userParsed = JSON.parse(userData);
+        setUser(userParsed)
+        setRole(userParsed.role as "requester" | "fulfiller");
+      }
+    }
+    getUser()
   }, []);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      firstName: "firstName",
-      lastName: "lasName",
-      email: "email@gmail.com",
+      firstName: user ? user.firstName : "firstName",
+      lastName: user ? user.lastName : "lasName",
+      email: user ? user.email : "email@gmail.com",
       message: "",
     },
     onSubmit: (values) => {

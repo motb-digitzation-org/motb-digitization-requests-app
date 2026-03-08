@@ -1,4 +1,5 @@
 "use client";
+import { updateUser } from "@/app/database/actions/userActions";
 import ThreeColLayout from "@/components/mlayouts/threeColLayout";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,28 +23,68 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
-  const [alert, setAlert] = useState<boolean>(false);
-
+  const [user, setUser] = useState<{
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: "requester" | "fulfiller";
+    createdAt: string;
+    updatedAt: string;
+  } | null>(null);
   const [role, setRole] = useState<"requester" | "fulfiller">("requester");
+  const [alert, setAlert] = useState<string>("");
 
   useEffect(() => {
-    function getRole() {
-      setRole("fulfiller");
+    function getUser() {
+      const userData = window.sessionStorage.getItem("user");
+
+      if (userData) {
+        const userParsed = JSON.parse(userData);
+        setUser(userParsed);
+        setRole(userParsed.role as "requester" | "fulfiller");
+      }
     }
 
-    getRole();
+    getUser();
   }, []);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: user ? user.firstName : "",
+      lastName: user ? user.lastName : "",
+      email: user ? user.email : "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-      // TODO: update user credentials in db
-      formik.resetForm();
+    onSubmit: async (values) => {
+      if (user) {
+        const response = await updateUser(
+          user.id,
+          values.firstName,
+          values.lastName,
+          values.email,
+        );
+
+        if (response.success) {
+          if(response.user) {
+            window.sessionStorage.setItem("user", JSON.stringify(response.user));
+            setUser({
+              id: response.user.id,
+              firstName: response.user.firstName,
+              lastName: response.user.lastName,
+              email: response.user.email,
+              role: response.user.role,
+              createdAt: response.user.createdAt.toISOString(),
+              updatedAt: response.user.updatedAt.toISOString(),
+            });
+            setAlert("Your changes have been saved.");
+          }
+        } else {
+          setAlert(
+            "There was an error updating your credentials. Please try again.",
+          );
+        }
+      }
     },
   });
 
@@ -131,11 +172,7 @@ export default function SettingsPage() {
                 >
                   Save Changes
                 </Button>
-                {alert ? (
-                  <small>Your changes have been saved.</small>
-                ) : (
-                  <small className="invisible">Empty</small>
-                )}
+                <small>{alert}</small>
               </div>
             </form>
 

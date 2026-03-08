@@ -67,3 +67,43 @@ export const getUser = async (email: string) => {
     return null;
   }
 };
+
+export const updateUser = async (
+  userId: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+) => {
+  try {
+    const [updateUser] = await db
+      .update(usersTable)
+      .set({
+        firstName,
+        lastName,
+        email,
+        updatedAt: new Date(Date.now()),
+      })
+      .where(eq(usersTable.id, userId))
+      .returning();
+
+      if (updateUser) {
+        return {
+          success: true,
+          message: "Updated user",
+          user: updateUser,
+        }
+      }
+
+      return {
+        success: false,
+        message: "Could not update user",
+      }
+  } catch (error) {
+    console.error("updateUser", error);
+    return {
+      success: false,
+      message: "Error updating user",
+      error
+    };
+  }
+};
