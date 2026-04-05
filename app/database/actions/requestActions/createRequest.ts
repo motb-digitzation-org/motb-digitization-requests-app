@@ -2,6 +2,7 @@
 
 import { db } from "../../drizzle";
 import { requestsTable } from "../../schema";
+import { requestStatus } from "../../utils";
 
 export const createRequestAsRequester = async (
   objectClass: string,
@@ -19,13 +20,6 @@ export const createRequestAsRequester = async (
   userId: number,
 ) => {
   try {
-    /**
-     * Performs an upsert operation (insert or update). When conflict occurs (e.g., duplicate PK or unique constraint), instead of failing it updates the existing row.
-     * 
-     * conflict detection: You specify a `target` to monitor conflicts
-     * 
-     * `set` defines which columns to update
-     */
     const [createRequest] = await db
       .insert(requestsTable)
       .values({
@@ -41,39 +35,29 @@ export const createRequestAsRequester = async (
         requestDueDate,
         requestType,
         requestNotes,
+        requestStatus: requestStatus[0],
         userId,
       })
-      .onConflictDoUpdate({
-        target: requestsTable.id,
-        set: {
-          objectClass,
-          objectName,
-          objectCode,
-          objectTier,
-          objectOnDisplay,
-          objectLocation,
-          objectWidth,
-          objectHeight,
-          objectDepth,
-          requestDueDate,
-          requestType,
-          requestNotes,
-          userId,
-        },
-      }).returning();
+      .returning();
 
+    if (createRequest) {
       return {
         success: true,
         message: "Created request",
-        request: createRequest
-      }
+        request: createRequest,
+      };
+    }
 
+    return {
+      success: false,
+      message: "Could not create request",
+    };
   } catch (error) {
     console.error("createRequest", error);
     return {
       success: false,
       message: "Error creating request",
-      error
+      error,
     };
   }
 };
@@ -98,6 +82,7 @@ export const createRequestAsFulfiller = async (
   requestEndDate: string,
   requestExportDate: string,
   requestTotalImgSize: string,
+  requestStatus: string,
   adminNotes: string,
   userId: number,
 ) => {

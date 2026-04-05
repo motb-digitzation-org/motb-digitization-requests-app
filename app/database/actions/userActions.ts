@@ -1,5 +1,5 @@
 "use server";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 import { db } from "../drizzle";
 import { usersTable } from "../schema";
 
@@ -86,24 +86,53 @@ export const updateUser = async (
       .where(eq(usersTable.id, userId))
       .returning();
 
-      if (updateUser) {
-        return {
-          success: true,
-          message: "Updated user",
-          user: updateUser,
-        }
-      }
-
+    if (updateUser) {
       return {
-        success: false,
-        message: "Could not update user",
-      }
+        success: true,
+        message: "Updated user",
+        user: updateUser,
+      };
+    }
+
+    return {
+      success: false,
+      message: "Could not update user",
+    };
   } catch (error) {
     console.error("updateUser", error);
     return {
       success: false,
       message: "Error updating user",
-      error
+      error,
+    };
+  }
+};
+
+export const deleteUser = async (userId: number, email: string) => {
+  try {
+    const delUser = await db
+      .delete(usersTable)
+      .where(or(eq(usersTable.email, email), eq(usersTable.id, userId)))
+      .returning();
+
+    if (delUser) {
+      return {
+        success: true,
+        message: "Deleted user",
+        user: delUser,
+      };
+    }
+
+    return {
+      success: false,
+      message: "Could not delete user",
+    };
+  } catch (error) {
+    console.error("deleteUser", error);
+    return {
+      success: false,
+      message: "Error deleting user",
+      error,
     };
   }
 };

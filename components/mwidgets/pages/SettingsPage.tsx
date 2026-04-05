@@ -1,5 +1,6 @@
 "use client";
-import { updateUser } from "@/app/database/actions/userActions";
+import { deleteAllRequests } from "@/app/database/actions/requestActions/deleteRequest";
+import { deleteUser, updateUser } from "@/app/database/actions/userActions";
 import ThreeColLayout from "@/components/mlayouts/threeColLayout";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
@@ -34,6 +36,9 @@ export default function SettingsPage() {
   } | null>(null);
   const [role, setRole] = useState<"requester" | "fulfiller">("requester");
   const [alert, setAlert] = useState<string>("");
+  const [deleteAllRequestsAlert, setDeleteAllRequestsAlert] =
+    useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     function getUser() {
@@ -66,8 +71,11 @@ export default function SettingsPage() {
         );
 
         if (response.success) {
-          if(response.user) {
-            window.sessionStorage.setItem("user", JSON.stringify(response.user));
+          if (response.user) {
+            window.sessionStorage.setItem(
+              "user",
+              JSON.stringify(response.user),
+            );
             setUser({
               id: response.user.id,
               firstName: response.user.firstName,
@@ -195,9 +203,33 @@ export default function SettingsPage() {
                       all of your digitization requests from our servers.
                     </DialogDescription>
                   </DialogHeader>
-                  <Button type="submit" className="cursor-pointer">
+                  <Button
+                    type="submit"
+                    className="cursor-pointer"
+                    onClick={async () => {
+                      if (user) {
+                        const response = await deleteAllRequests(user.id);
+
+                        if (response.success) {
+                          setDeleteAllRequestsAlert(
+                            "All requests have been deleted. Please close this dialogue box.",
+                          );
+                        } else {
+                          setDeleteAllRequestsAlert(
+                            "Could not delete all requests. Please try again.",
+                          );
+                        }
+
+                        // after 3 seconds, clear the alert
+                        setTimeout(() => {
+                          setDeleteAllRequestsAlert("");
+                        }, 5000);
+                      }
+                    }}
+                  >
                     I&apos;m sure, delete all requests
                   </Button>
+                  <p className="text-center">{deleteAllRequestsAlert}</p>
                 </DialogContent>
               </Dialog>
 
@@ -216,10 +248,25 @@ export default function SettingsPage() {
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
                     <DialogDescription>
                       This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers.
+                      your account and remove your data from our servers. Upon
+                      deletion you will be directed to the home page.
                     </DialogDescription>
                   </DialogHeader>
-                  <Button type="submit" className="cursor-pointer">
+                  <Button
+                    type="submit"
+                    className="cursor-pointer"
+                    onClick={async () => {
+                      if (user) {
+                        const response = await deleteUser(user.id, user.email);
+
+                        if (response.success) {
+                          setTimeout(() => {
+                            router.push("/");
+                          }, 3000);
+                        }
+                      }
+                    }}
+                  >
                     I&apos;m sure, delete my account
                   </Button>
                 </DialogContent>

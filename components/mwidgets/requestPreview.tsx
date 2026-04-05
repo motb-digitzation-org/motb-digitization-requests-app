@@ -14,8 +14,19 @@ import { Button } from "../ui/button";
 
 interface RequestPreviewProps {
   index: number;
+  selectedRequest: number | null;
+  objectCode: string;
+  requestType: string;
+  requestStatus: string;
 }
-export default function RequestPreview({ index }: RequestPreviewProps) {
+
+export default function RequestPreview({
+  index,
+  selectedRequest,
+  objectCode,
+  requestType,
+  requestStatus,
+}: RequestPreviewProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -33,24 +44,36 @@ export default function RequestPreview({ index }: RequestPreviewProps) {
     return () => window.removeEventListener("resize", updateIsMobile);
   }, []);
 
+  function requestStatusColour(requestStatus: string) {
+    switch (requestStatus) {
+      case "Created":
+        return "border-gray-400 bg-gray-400";
+      case "In Progress":
+        return "border-orange-400 bg-orange-400";
+      case "Done":
+        return "border-green-400 bg-green-400";
+      case "Abandoned":
+        return "border-red-400 bg-red-400";
+    }
+  }
+
   if (isMobile) {
     return (
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger className="w-full">
           <div
-            className={`mobile-display ${index % 2 ? `bg-white` : `bg-gray-200`} flex cursor-pointer justify-between rounded-sm p-3 transition-colors duration-300 ease-in-out hover:bg-gray-300`}
+            className={`mobile-display ${index % 2 ? `bg-white` : `bg-gray-200`} flex cursor-pointer items-baseline gap-3 rounded-sm p-3 transition-colors duration-300 ease-in-out hover:bg-gray-300`}
           >
             <div className="text-left">
-              <p className="font-bold">Object Name</p>
-              <p className="text-xs text-gray-700">Object Code</p>
+              <p className="font-bold">{objectCode.toLocaleUpperCase()}</p>
+              <p className="text-xs text-gray-700">
+                {requestType.toLocaleUpperCase()}
+              </p>
             </div>
-            <div>
-              <div className="flex flex-row items-center gap-2">
-                <p className="text-xs">Request Status</p>
-                <div className="h-3 w-3 rounded-3xl border-2 border-green-400 bg-green-400"></div>
-              </div>
-              <p className="text-right text-xs text-gray-700">Request Type</p>
-            </div>
+
+            <div
+              className={`h-3 w-3 rounded-3xl border-2 ${requestStatusColour(requestStatus)}`}
+            ></div>
           </div>
         </SheetTrigger>
         <SheetContent>
@@ -88,18 +111,21 @@ export default function RequestPreview({ index }: RequestPreviewProps) {
   } else {
     return (
       <div
-        className={`tdesktop-display ${index % 2 ? `bg-white` : `bg-gray-200`} flex cursor-pointer justify-between rounded-sm p-3 transition-colors duration-300 ease-in-out hover:bg-gray-300`}
+        className={`desktop-display ${selectedRequest && selectedRequest == index ? `bg-museum-teal` : index % 2 ? `bg-gray-100` : `bg-gray-200`} flex cursor-pointer justify-between rounded-sm p-3 transition-colors duration-300 ease-in-out hover:bg-gray-300`}
       >
         <div className="text-left">
-          <p className="font-bold">Object Name</p>
-          <p className="text-xs text-gray-700">Object Code</p>
+          <p className="font-bold">{objectCode.toLocaleUpperCase()}</p>
+          <p className="text-xs text-gray-700">
+            {requestType.toLocaleUpperCase()}
+          </p>
         </div>
         <div>
           <div className="flex flex-row items-center gap-2">
-            <p className="text-xs">Request Status</p>
-            <div className="h-3 w-3 rounded-3xl border-2 border-green-400 bg-green-400"></div>
+            <p className="text-xs">{requestStatus}</p>
+            <div
+              className={`h-3 w-3 rounded-3xl border-2 ${requestStatusColour(requestStatus)}`}
+            ></div>
           </div>
-          <p className="text-right text-xs text-gray-700">Request Type</p>
         </div>
       </div>
     );

@@ -38,7 +38,7 @@ export default function RequestAccess() {
 
       if (response.success) {
         setAlertMessage(
-          " Thank you for your submission. An admin will contact you soon.",
+          " Thank you for your submission. Please go to the login page to log in.",
         );
         formik.resetForm();
       } else {
@@ -181,7 +181,7 @@ export default function RequestAccess() {
                     setAlert(true);
                   }}
                 >
-                  Request Access
+                  Sign Up
                 </Button>
                 {alert ? (
                   <small>{alertMessage}</small>

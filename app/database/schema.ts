@@ -55,6 +55,7 @@ export const requestsTable = pgTable(
     requestEndDate: timestamp("request_end_date"), // when did you finish?
     requestExportDate: timestamp("request_export_date"), // when were all images exported?
     requestTotalImgSize: text("request_total_img_size"),
+    requestStatus: text("request_status").notNull(),
     adminNotes: text("admin_notes"), // i.e.: digitisation notes
     userId: bigint("user_id", { mode: "number" })
       .notNull()

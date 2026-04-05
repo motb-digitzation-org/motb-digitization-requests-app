@@ -33,11 +33,11 @@ export default function Navigation({ role }: NavigationProps) {
         icon: <Plus />,
         link: role == "fulfiller" ? "/admin/requests/new" : "/requests/new",
       },
-      {
-        label: "Notifications",
-        icon: <Bell />,
-        link: "/admin/notifications",
-      },
+      // {
+      //   label: "Notifications",
+      //   icon: <Bell />,
+      //   link: "/admin/notifications",
+      // },
       {
         label: "Help",
         icon: <CircleQuestionMark />,

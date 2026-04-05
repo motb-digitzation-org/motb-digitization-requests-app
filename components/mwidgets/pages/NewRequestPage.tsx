@@ -1,5 +1,6 @@
 "use client";
 import { createRequestAsRequester } from "@/app/database/actions/requestActions/createRequest";
+import { classifications, RequestFormValues } from "@/app/database/utils";
 import ThreeColLayout from "@/components/mlayouts/threeColLayout";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -66,60 +67,6 @@ export default function NewRequestPage() {
     getUser();
   }, []);
 
-  const classifications = [
-    "Amulet (AMU)",
-    "Antiquity (ATQ)",
-    "Art (ART)",
-    "Art-Stained-Glass (ART)",
-    "Audiovisual (AV)",
-    "Bible-Printed Book (BIB)",
-    "Binders Fragment (BF)",
-    "Bullae (BUL)",
-    "Ceramics (CER)",
-    "Coin (NUM)",
-    "Cuneiform (CUN)",
-    "Facsimile (FAC)",
-    "Furniture (FUR)",
-    "Incunable (INC)",
-    "Jewelry (JWL)",
-    "Jewish Paraphernalia (JUD)",
-    "Manuscript (MS)",
-    "Manuscript-Papyrus (MS/PAP)",
-    "Metals (MTL)",
-    "Mummy Paraphernalia (MMY)",
-    "Object (OBJ)",
-    "Ostraca (OSTR)",
-    "Pamphlet (PAM)",
-    "Papers (PPR)",
-    "Papyrus (PAP)",
-    "Photograph (PHO)",
-    "Press (PRS)",
-    "Printed Book (PBK)",
-    "Scroll (SCR)",
-    "Seal (SEA)",
-    "Statuary (STA)",
-    "Stone (STN)",
-    "Textile (TXT)",
-    "Torah Paraphernalia (ARK)",
-  ].sort((a, b) => a.localeCompare(b));
-
-  interface RequestFormValues {
-    firstName: string;
-    lastName: string;
-    email: string;
-    classification: string; // always controlled, empty string when none
-    objectName: string;
-    objectCode: string;
-    tier: string;
-    onDisplay: boolean;
-    objectLocation: string;
-    width: string;
-    height: string;
-    depth: string;
-    requestDueDate?: Date;
-    requestType: string;
-    additionalNotes: string;
-  }
 
   const formik = useFormik<RequestFormValues>({
     enableReinitialize: true,
