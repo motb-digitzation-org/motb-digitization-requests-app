@@ -1,6 +1,7 @@
 "use client";
 import { deleteAllRequests } from "@/app/database/actions/requestActions/deleteRequest";
 import { deleteUser, updateUser } from "@/app/database/actions/userActions";
+import { getGlobalUser } from "@/app/database/utils";
 import ThreeColLayout from "@/components/mlayouts/threeColLayout";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,24 +35,16 @@ export default function SettingsPage() {
     createdAt: string;
     updatedAt: string;
   } | null>(null);
-  const [role, setRole] = useState<"requester" | "fulfiller">("requester");
   const [alert, setAlert] = useState<string>("");
   const [deleteAllRequestsAlert, setDeleteAllRequestsAlert] =
     useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
-    function getUser() {
-      const userData = window.sessionStorage.getItem("user");
-
-      if (userData) {
-        const userParsed = JSON.parse(userData);
-        setUser(userParsed);
-        setRole(userParsed.role as "requester" | "fulfiller");
-      }
+    function getUserLocal() {
+      setUser(getGlobalUser());
     }
-
-    getUser();
+    getUserLocal();
   }, []);
 
   const formik = useFormik({
@@ -96,185 +89,199 @@ export default function SettingsPage() {
     },
   });
 
-  return (
-    <ThreeColLayout navRole={role}>
-      <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-10 lg:mb-0">
-        <CardHeader className="text-center">
-          <CardTitle>Settings</CardTitle>
-          <CardDescription>Your account settings.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col items-center justify-center">
-            <form
-              onSubmit={formik.handleSubmit}
-              className="flex w-full flex-col gap-8 md:w-2/3"
-            >
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
-                <div className="wrapper">
-                  <Label>First Name</Label>
-                  <p>firstName here</p>
-                </div>
-                <div className="input-wrapper">
-                  <Label htmlFor="firstName" className="mb-2">
-                    First Name
-                  </Label>
-                  <Input
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    placeholder="New First Name"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.firstName}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
-                <div className="wrapper">
-                  <Label>Last Name</Label>
-                  <p>lastName here</p>
-                </div>
-                <div className="input-wrapper">
-                  <Label htmlFor="lastName" className="mb-2">
-                    Last Name
-                  </Label>
-                  <Input
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    placeholder="New Last Name"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.lastName}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
-                <div className="wrapper w-full">
-                  <Label>Email</Label>
-                  <p>email here</p>
+  if (user) {
+    return (
+      <ThreeColLayout navRole={user.role}>
+        <Card className="col-span-4 mb-20 overflow-y-auto md:col-span-6 lg:col-span-10 lg:mb-0">
+          <CardHeader className="text-center">
+            <CardTitle>Settings</CardTitle>
+            <CardDescription>Your account settings.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col items-center justify-center">
+              <form
+                onSubmit={formik.handleSubmit}
+                className="flex w-full flex-col gap-8 md:w-2/3"
+              >
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
+                  <div className="wrapper">
+                    <Label>First Name</Label>
+                    <p>firstName here</p>
+                  </div>
+                  <div className="input-wrapper">
+                    <Label htmlFor="firstName" className="mb-2">
+                      First Name
+                    </Label>
+                    <Input
+                      type="text"
+                      name="firstName"
+                      id="firstName"
+                      placeholder="New First Name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.firstName}
+                    />
+                  </div>
                 </div>
 
-                <div className="input-wrapper w-full">
-                  <Label htmlFor="email" className="mb-2">
-                    Email
-                  </Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="New Email"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                  />
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
+                  <div className="wrapper">
+                    <Label>Last Name</Label>
+                    <p>lastName here</p>
+                  </div>
+                  <div className="input-wrapper">
+                    <Label htmlFor="lastName" className="mb-2">
+                      Last Name
+                    </Label>
+                    <Input
+                      type="text"
+                      name="lastName"
+                      id="lastName"
+                      placeholder="New Last Name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.lastName}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="text-center">
-                <Button
-                  type="submit"
-                  className="bg-museum-orange hover:bg-museum-dark-orange mb-2 w-full cursor-pointer"
-                >
-                  Save Changes
-                </Button>
-                <small>{alert}</small>
-              </div>
-            </form>
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
+                  <div className="wrapper w-full">
+                    <Label>Email</Label>
+                    <p>email here</p>
+                  </div>
 
-            <div className="my-4 flex flex-row gap-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant={"destructive"}
-                    type="button"
-                    className="cursor-pointer"
-                  >
-                    Delete All Requests
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      all of your digitization requests from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
+                  <div className="input-wrapper w-full">
+                    <Label htmlFor="email" className="mb-2">
+                      Email
+                    </Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="New Email"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
+                    />
+                  </div>
+                </div>
+
+                <div className="text-center">
                   <Button
                     type="submit"
-                    className="cursor-pointer"
-                    onClick={async () => {
-                      if (user) {
-                        const response = await deleteAllRequests(user.id);
-
-                        if (response.success) {
-                          setDeleteAllRequestsAlert(
-                            "All requests have been deleted. Please close this dialogue box.",
-                          );
-                        } else {
-                          setDeleteAllRequestsAlert(
-                            "Could not delete all requests. Please try again.",
-                          );
-                        }
-
-                        // after 3 seconds, clear the alert
-                        setTimeout(() => {
-                          setDeleteAllRequestsAlert("");
-                        }, 5000);
-                      }
-                    }}
+                    className="bg-museum-orange hover:bg-museum-dark-orange mb-2 w-full cursor-pointer"
                   >
-                    I&apos;m sure, delete all requests
+                    Save Changes
                   </Button>
-                  <p className="text-center">{deleteAllRequestsAlert}</p>
-                </DialogContent>
-              </Dialog>
+                  <small>{alert}</small>
+                </div>
+              </form>
 
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant={"destructive"}
-                    type="button"
-                    className="cursor-pointer"
-                  >
-                    Delete Account
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers. Upon
-                      deletion you will be directed to the home page.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Button
-                    type="submit"
-                    className="cursor-pointer"
-                    onClick={async () => {
-                      if (user) {
-                        const response = await deleteUser(user.id, user.email);
+              <div className="my-4 flex flex-row gap-2">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant={"destructive"}
+                      type="button"
+                      className="cursor-pointer"
+                    >
+                      Delete All Requests
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you absolutely sure?</DialogTitle>
+                      <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete all of your digitization requests from our
+                        servers.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <Button
+                      type="submit"
+                      className="cursor-pointer"
+                      onClick={async () => {
+                        if (user) {
+                          const response = await deleteAllRequests(user.id);
 
-                        if (response.success) {
+                          if (response.success) {
+                            setDeleteAllRequestsAlert(
+                              "All requests have been deleted. Please close this dialogue box.",
+                            );
+                          } else {
+                            setDeleteAllRequestsAlert(
+                              "Could not delete all requests. Please try again.",
+                            );
+                          }
+
+                          // after 3 seconds, clear the alert
                           setTimeout(() => {
-                            router.push("/");
-                          }, 3000);
+                            setDeleteAllRequestsAlert("");
+                          }, 5000);
                         }
-                      }
-                    }}
-                  >
-                    I&apos;m sure, delete my account
-                  </Button>
-                </DialogContent>
-              </Dialog>
+                      }}
+                    >
+                      I&apos;m sure, delete all requests
+                    </Button>
+                    <p className="text-center">{deleteAllRequestsAlert}</p>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant={"destructive"}
+                      type="button"
+                      className="cursor-pointer"
+                    >
+                      Delete Account
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you absolutely sure?</DialogTitle>
+                      <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers. Upon deletion you will be directed to the home
+                        page.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <Button
+                      type="submit"
+                      className="cursor-pointer"
+                      onClick={async () => {
+                        if (user) {
+                          const response = await deleteUser(
+                            user.id,
+                            user.email,
+                          );
+
+                          if (response.success) {
+                            setTimeout(() => {
+                              router.push("/");
+                            }, 3000);
+                          }
+                        }
+                      }}
+                    >
+                      I&apos;m sure, delete my account
+                    </Button>
+                  </DialogContent>
+                </Dialog>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </ThreeColLayout>
-  );
+          </CardContent>
+        </Card>
+      </ThreeColLayout>
+    );
+  } else {
+    // TODO: make look pretty
+    return (
+      <div>
+        <p>You&apos;re not logged in</p>
+      </div>
+    );
+  }
 }

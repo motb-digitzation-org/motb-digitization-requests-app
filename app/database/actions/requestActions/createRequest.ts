@@ -35,7 +35,7 @@ export const createRequestAsRequester = async (
         requestDueDate,
         requestType,
         requestNotes,
-        requestStatus: requestStatus[0],
+        requestStatus: requestStatus[0].value,
         userId,
       })
       .returning();
@@ -59,36 +59,5 @@ export const createRequestAsRequester = async (
       message: "Error creating request",
       error,
     };
-  }
-};
-
-export const createRequestAsFulfiller = async (
-  objectClass: string,
-  objectName: string,
-  objectCode: string,
-  objectTier: number,
-  objectOnDisplay: boolean,
-  objectLocation: string,
-  objectWidth: string,
-  objectHight: string,
-  objectDepth: string,
-  objectMule: string,
-  objectPulledDate: string,
-  objectPutBackDate: string,
-  requestDueDate: string,
-  requestType: string,
-  requestNotes: string,
-  requestStartDate: string,
-  requestEndDate: string,
-  requestExportDate: string,
-  requestTotalImgSize: string,
-  requestStatus: string,
-  adminNotes: string,
-  userId: number,
-) => {
-  try {
-  } catch (error) {
-    console.error("createRequest", error);
-    return null;
   }
 };

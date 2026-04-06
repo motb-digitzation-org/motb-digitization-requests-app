@@ -1,46 +1,46 @@
 // used in request form
 export const classifications = [
-  "Amulet (AMU)",
-  "Antiquity (ATQ)",
-  "Art (ART)",
-  "Art-Stained-Glass (ART)",
-  "Audiovisual (AV)",
-  "Bible-Printed Book (BIB)",
-  "Binders Fragment (BF)",
-  "Bullae (BUL)",
-  "Ceramics (CER)",
-  "Coin (NUM)",
-  "Cuneiform (CUN)",
-  "Facsimile (FAC)",
-  "Furniture (FUR)",
-  "Incunable (INC)",
-  "Jewelry (JWL)",
-  "Jewish Paraphernalia (JUD)",
-  "Manuscript (MS)",
-  "Manuscript-Papyrus (MS/PAP)",
-  "Metals (MTL)",
-  "Mummy Paraphernalia (MMY)",
-  "Object (OBJ)",
-  "Ostraca (OSTR)",
-  "Pamphlet (PAM)",
-  "Papers (PPR)",
-  "Papyrus (PAP)",
-  "Photograph (PHO)",
-  "Press (PRS)",
-  "Printed Book (PBK)",
-  "Scroll (SCR)",
-  "Seal (SEA)",
-  "Statuary (STA)",
-  "Stone (STN)",
-  "Textile (TXT)",
-  "Torah Paraphernalia (ARK)",
-].sort((a, b) => a.localeCompare(b));
+  { value: "AMU", label: "Amulet (AMU)" },
+  { value: "ATQ", label: "Antiquity (ATQ)" },
+  { value: "ART", label: "Art (ART)" },
+  { value: "ART-SG", label: "Art-Stained-Glass (ART-SG)" },
+  { value: "AV", label: "Audiovisual (AV)" },
+  { value: "BIB", label: "Bible-Printed Book (BIB)" },
+  { value: "BF", label: "Binders Fragment (BF)" },
+  { value: "BUL", label: "Bullae (BUL)" },
+  { value: "CER", label: "Ceramics (CER)" },
+  { value: "NUM", label: "Coin (NUM)" },
+  { value: "CUN", label: "Cuneiform (CUN)" },
+  { value: "FAC", label: "Facsimile (FAC)" },
+  { value: "FUR", label: "Furniture (FUR)" },
+  { value: "INC", label: "Incunable (INC)" },
+  { value: "JWL", label: "Jewelry (JWL)" },
+  { value: "JUD", label: "Jewish Paraphernalia (JUD)" },
+  { value: "MS", label: "Manuscript (MS)" },
+  { value: "MS-PAP", label: "Manuscript-Papyrus (MS-PAP)" },
+  { value: "MTL", label: "Metals (MTL)" },
+  { value: "MMY", label: "Mummy Paraphernalia (MMY)" },
+  { value: "OBJ", label: "Object (OBJ)" },
+  { value: "OSTR", label: "Ostraca (OSTR)" },
+  { value: "PAM", label: "Pamphlet (PAM)" },
+  { value: "PPR", label: "Papers (PPR)" },
+  { value: "PAP", label: "Papyrus (PAP)" },
+  { value: "PHO", label: "Photograph (PHO)" },
+  { value: "PRS", label: "Press (PRS)" },
+  { value: "PBK", label: "Printed Book (PBK)" },
+  { value: "SCR", label: "Scroll (SCR)" },
+  { value: "SEA", label: "Seal (SEA)" },
+  { value: "STA", label: "Statuary (STA)" },
+  { value: "STN", label: "Stone (STN)" },
+  { value: "TXT", label: "Textile (TXT)" },
+  { value: "ARK", label: "Torah Paraphernalia (ARK)}" },
+].sort((a, b) => a.label.localeCompare(b.label));
 
 export interface RequestFormValues {
   firstName: string;
   lastName: string;
   email: string;
-  classification: string; // always controlled, empty string when none
+  classification: {value: string; label: string;}; // always controlled, empty string when none
   objectName: string;
   objectCode: string;
   tier: string;
@@ -52,56 +52,41 @@ export interface RequestFormValues {
   requestDueDate: Date | undefined;
   requestType: string;
   additionalNotes: string;
-  objectPulledDate?: Date | undefined;
-  objectPutBackDate?: Date | undefined;
+
+  // additional admin (= fulfiller) fields
+  mule?: string;
+  pulledDate?: Date | undefined;
+  putBackDate?: Date | undefined;
   requestStartDate?: Date | undefined;
   requestEndDate?: Date | undefined;
+  requestExportDate?: Date | undefined;
   totalImageSize?: string;
   requestStatus?: string;
+  adminNotes?: string;
 }
 
-export const requestStatus = ["Created", "In Progress", "Done", "Abandoned"];
+export const requestStatus = [
+  { value: "created", label: "Created" },
+  { value: "inProg", label: "In Progress" },
+  { value: "done", label: "Done" },
+  { value: "abandoned", label: "Abandoned" },
+];
 
-//  <div className="request-details">
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Object Classification</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Object Name</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Object Code</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="">Tier</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">On Display?</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Object Location</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Dimensions</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Request Due Date</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Request Type</p>
-//           <p>[content]</p>
-//         </div>
-//         <div className="request-info mb-4">
-//           <p className="font-bold">Additional Notes</p>
-//           <p>[content]</p>
-//         </div>
-//         <Button>Update Request</Button>
-//       </div>
+export interface UserInterface {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: "requester" | "fulfiller";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export function getGlobalUser() {
+  const userData = window.sessionStorage.getItem("user");
+
+  if (userData) {
+    const userParsed = JSON.parse(userData);
+    return userParsed;
+  }
+}
